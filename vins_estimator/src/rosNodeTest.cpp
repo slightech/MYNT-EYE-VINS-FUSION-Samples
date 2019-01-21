@@ -202,6 +202,10 @@ int main(int argc, char **argv)
     ros::NodeHandle n("~");
     ros::console::set_logger_level(ROSCONSOLE_DEFAULT_NAME, ros::console::levels::Info);
 
+   std::string config_file = "read_config_path_is_not_correct";   
+
+if (argc > 1)
+{
     if(argc != 2)
     {
         printf("please intput: rosrun vins vins_node [config file] \n"
@@ -210,9 +214,18 @@ int main(int argc, char **argv)
         return 1;
     }
 
-    string config_file = argv[1];
-    printf("config_file: %s\n", argv[1]);
-
+    config_file = argv[1];
+}
+else
+{
+   // printf("config_file: %s\n", argv[1]);
+   if (!n.getParam("config_file", config_file))
+   {
+     ROS_INFO("Error: %s\n",config_file.c_str());
+     return 1;
+   }
+    ROS_INFO("load config_file: %s\n", config_file.c_str());
+}
     readParameters(config_file);
     estimator.setParameter();
 
