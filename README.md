@@ -18,7 +18,7 @@ roslaunch vins mynteye-s-mono-imu.launch
 ```
 #### Stereo fusion
 ```
-cd MYNT-EYE-S-SDK
+cd path/to/MYNT-EYE-S-SDK
 source wrappers/ros/devel/setup.bash
 roslaunch mynt_eye_ros_wrapper vins_fusion.launch
 cd path/to/catkin_ws
@@ -29,7 +29,7 @@ roslaunch vins mynteye-s-stereo.launch
 
 #### Stereo+imu fusion
 ```
-cd MYNT-EYE-S-SDK
+cd path/to/MYNT-EYE-S-SDK
 source wrappers/ros/devel/setup.bash
 roslaunch mynt_eye_ros_wrapper vins_fusion.launch
 cd path/to/catkin_ws
@@ -41,7 +41,7 @@ roslaunch vins mynteye-s-stereo.launch
 ## Run vins-fusion with <span id = "dsdkinstall">mynteye-d</span>
 #### mono+imu fusion
 ```
-cd MYNT-EYE-D-SDK
+cd path/to/MYNT-EYE-D-SDK
 source wrappers/ros/devel/setup.bash
 roslaunch mynteye_wrapper_d vins_fusion.launch  stream_mode:=1 # stereo camera with 640x480
 cd path/to/catkin_ws
@@ -51,7 +51,7 @@ roslaunch vins mynteye-d-mono-imu.launch
 ```
 #### Stereo fusion
 ```
-cd MYNT-EYE-D-SDK
+cd path/to/MYNT-EYE-D-SDK
 source wrappers/ros/devel/setup.bash
 roslaunch mynteye_wrapper_d vins_fusion.launch  stream_mode:=1 # stereo camera with 640x480
 cd path/to/catkin_ws
@@ -62,7 +62,7 @@ roslaunch vins mynteye-d-stereo.launch
 
 #### Stereo+imu fusion
 ```
-cd MYNT-EYE-D-SDK
+cd path/to/MYNT-EYE-D-SDK
 source wrappers/ros/devel/setup.bash
 roslaunch mynteye_wrapper_d vins_fusion.launch  stream_mode:=1 # stereo camera with 640x480
 cd path/to/catkin_ws
@@ -73,7 +73,7 @@ roslaunch vins mynteye-d-stereo.launch
 ## Run vins-fusion with <span id = "avartasdkinstall">mynteye-avarta</span>
 #### mono+imu fusion
 ```
-cd MYNT-EYE-S-SDK
+cd path/to/MYNT-EYE-S-SDK
 source wrappers/ros/devel/setup.bash
 roslaunch mynt_eye_ros_wrapper vins_fusion.launch
 cd path/to/catkin_ws
@@ -84,7 +84,7 @@ roslaunch vins mynteye-avarta-mono-imu.launch
 
 #### Stereo fusion
 ```
-cd MYNT-EYE-S-SDK
+cd path/to/MYNT-EYE-S-SDK
 source wrappers/ros/devel/setup.bash
 roslaunch mynt_eye_ros_wrapper vins_fusion.launch
 cd path/to/catkin_ws
