@@ -12,6 +12,7 @@ cd path/to/MYNT-EYE-S-SDK
 source wrappers/ros/devel/setup.bash
 roslaunch mynt_eye_ros_wrapper vins_fusion.launch
 cd path/to/catkin_ws
+catkin_make
 source ./devel/setup.bash
 roslaunch vins mynteye-s-mono-imu.launch
 ```
@@ -21,6 +22,7 @@ cd MYNT-EYE-S-SDK
 source wrappers/ros/devel/setup.bash
 roslaunch mynt_eye_ros_wrapper vins_fusion.launch
 cd path/to/catkin_ws
+catkin_make
 source ./devel/setup.bash
 roslaunch vins mynteye-s-stereo.launch
 ```
@@ -31,6 +33,7 @@ cd MYNT-EYE-S-SDK
 source wrappers/ros/devel/setup.bash
 roslaunch mynt_eye_ros_wrapper vins_fusion.launch
 cd path/to/catkin_ws
+catkin_make
 source ./devel/setup.bash
 roslaunch vins mynteye-s-stereo.launch
 ```
@@ -42,6 +45,7 @@ cd MYNT-EYE-D-SDK
 source wrappers/ros/devel/setup.bash
 roslaunch mynteye_wrapper_d vins_fusion.launch  stream_mode:=1 # stereo camera with 640x480
 cd path/to/catkin_ws
+catkin_make
 source ./devel/setup.bash
 roslaunch vins mynteye-d-mono-imu.launch
 ```
@@ -51,6 +55,7 @@ cd MYNT-EYE-D-SDK
 source wrappers/ros/devel/setup.bash
 roslaunch mynteye_wrapper_d vins_fusion.launch  stream_mode:=1 # stereo camera with 640x480
 cd path/to/catkin_ws
+catkin_make
 source ./devel/setup.bash
 roslaunch vins mynteye-d-stereo.launch
 ```
@@ -61,6 +66,7 @@ cd MYNT-EYE-D-SDK
 source wrappers/ros/devel/setup.bash
 roslaunch mynteye_wrapper_d vins_fusion.launch  stream_mode:=1 # stereo camera with 640x480
 cd path/to/catkin_ws
+catkin_make
 source ./devel/setup.bash
 roslaunch vins mynteye-d-stereo.launch
 ```
@@ -71,6 +77,7 @@ cd MYNT-EYE-S-SDK
 source wrappers/ros/devel/setup.bash
 roslaunch mynt_eye_ros_wrapper vins_fusion.launch
 cd path/to/catkin_ws
+catkin_make
 source ./devel/setup.bash
 roslaunch vins mynteye-avarta-mono-imu.launch
 ```
@@ -81,6 +88,7 @@ cd MYNT-EYE-S-SDK
 source wrappers/ros/devel/setup.bash
 roslaunch mynt_eye_ros_wrapper vins_fusion.launch
 cd path/to/catkin_ws
+catkin_make
 source ./devel/setup.bash
 roslaunch vins mynteye-avarta-stereo.launch
 ```
