@@ -1,7 +1,5 @@
 # MYNT-EYE-VINS-FUSION
 
-<<<<<<< HEAD
-
 ## Install MYNT-EYE--FUSION-Sample
 ```
 mkdir -p ~/catkin_ws/src
@@ -15,17 +13,6 @@ source ~/.bashrc
 ```
 
 Then ,judge if your device type is mynteye-d ,mynteye-s or mynteye-avarta,then follow the following installation process: [Run vins-fusion with mynteye-s](#ssdkinstall) / [Run vins-fusion with mynteye-d](#dsdkinstall) / [Run vins-fusion with mynteye-avarta](#avartasdkinstall).
-=======
-## complie and install
-```
-cd path/to/catkin_ws
-cd src
-git clone https://github.com/slightech/MYNT-EYE-VINS-FUSION-Samples.git 
-catkin_make
-```
-
-Judge if your device type is mynteye-d ,mynteye-s or mynteye-avarta,then follow the following installation process: [Run vins-fusion with mynteye-s](#ssdkinstall) / [Run vins-fusion with mynteye-d](#dsdkinstall) / [Run vins-fusion with mynteye-avarta](#avartasdkinstall).
->>>>>>> gitlab/test
 
 ## Run vins-fusion with <span id = "ssdkinstall">mynteye-s</span>
 
