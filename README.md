@@ -1,5 +1,26 @@
 # MYNT-EYE-VINS-FUSION
 
+## Prerequisites
+### 1. **Ubuntu** and **ROS**
+Ubuntu 64-bit 16.04 or 18.04.
+ROS Kinetic or Melodic. [ROS Installation](http://wiki.ros.org/ROS/Installation)
+### 2. **Ceres Solver**
+Follow [Ceres Installation](http://ceres-solver.org/installation.html).
+```commandline
+cd ~
+git clone https://ceres-solver.googlesource.com/ceres-solver
+sudo apt-get -y install cmake libgoogle-glog-dev libatlas-base-dev libeigen3-dev libsuitesparse-dev
+sudo add-apt-repository ppa:bzindovic/suitesparse-bugfix-1319687
+sudo apt-get update && sudo apt-get install libsuitesparse-dev
+mkdir ceres-bin
+cd ceres-bin
+cmake ../ceres-solver
+make -j3
+sudo make install
+```
+### 3. **Install MYNTEYE SDK**
+Skip this if already installed.
+[S-SDK Installation](https://mynt-eye-s-sdk.readthedocs.io/en/latest/src/sdk/source_install_ubuntu.html), [D-SDK Installation](https://mynt-eye-d-sdk.readthedocs.io/en/latest/installation/build_linux.html)
 
 ## Install MYNT-EYE--FUSION-Sample
 ```
@@ -16,77 +37,112 @@ source ~/.bashrc
 Then ,judge if your device type is mynteye-d ,mynteye-s or mynteye-avarta,then follow the following installation process: [Run vins-fusion with mynteye-s](#ssdkinstall) / [Run vins-fusion with mynteye-d](#dsdkinstall) / [Run vins-fusion with mynteye-avarta](#avartasdkinstall).
 
 ## Run vins-fusion with <span id = "ssdkinstall">mynteye-s</span>
-### mono+imu fusion
+
+### 
+
+#### mono+imu fusion
 ```
-cd MYNT-EYE-S-SDK
+cd path/to/MYNT-EYE-S-SDK
 source wrappers/ros/devel/setup.bash
-roslaunch mynt_eye_ros_wrapper mynteye.launch
+roslaunch mynt_eye_ros_wrapper vins_fusion.launch
+```
+Open another terminal
+```
+cd ~/catkin_ws/src
+source ./devel/setup.bash
 roslaunch vins mynteye-s-mono-imu.launch
 ```
-### Stereo fusion
+#### Stereo fusion
 ```
-cd MYNT-EYE-S-SDK
+cd path/to/MYNT-EYE-S-SDK
 source wrappers/ros/devel/setup.bash
-roslaunch mynt_eye_ros_wrapper mynteye.launch
+roslaunch mynt_eye_ros_wrapper vins_fusion.launch
+```
+Open another terminal
+```
+cd ~/catkin_ws/src
+source ./devel/setup.bash
 roslaunch vins mynteye-s-stereo.launch
 ```
 
-### Stereo+imu fusion
+#### Stereo+imu fusion
 ```
-cd MYNT-EYE-S-SDK
+cd path/to/MYNT-EYE-S-SDK
 source wrappers/ros/devel/setup.bash
-roslaunch mynt_eye_ros_wrapper mynteye.launch
-
+roslaunch mynt_eye_ros_wrapper vins_fusion.launch
+```
+Open another terminal
+```
+cd ~/catkin_ws/src
+source ./devel/setup.bash
 roslaunch vins mynteye-s-stereo.launch
 ```
 
 ## Run vins-fusion with <span id = "dsdkinstall">mynteye-d</span>
-### mono+imu fusion
+#### mono+imu fusion
 ```
-cd MYNT-EYE-D-SDK
+cd path/to/MYNT-EYE-D-SDK
 source wrappers/ros/devel/setup.bash
-roslaunch mynteye_wrapper_d mynteye.launch  stream_mode:=1 # stereo camera with 640x480
+roslaunch mynteye_wrapper_d vins_fusion.launch  stream_mode:=1 # stereo camera with 640x480
+```
+Open another terminal
+```
+cd ~/catkin_ws/src
+source ./devel/setup.bash
 roslaunch vins mynteye-d-mono-imu.launch
 ```
-### Stereo fusion
+#### Stereo fusion
 ```
-cd MYNT-EYE-D-SDK
+cd path/to/MYNT-EYE-D-SDK
 source wrappers/ros/devel/setup.bash
-roslaunch mynteye_wrapper_d mynteye.launch  stream_mode:=1 # stereo camera with 640x480
+roslaunch mynteye_wrapper_d vins_fusion.launch  stream_mode:=1 # stereo camera with 640x480
+```
+Open another terminal
+```
+cd ~/catkin_ws/src
+source ./devel/setup.bash
 roslaunch vins mynteye-d-stereo.launch
 ```
 
-### Stereo+imu fusion
+#### Stereo+imu fusion
 ```
-cd MYNT-EYE-D-SDK
+cd path/to/MYNT-EYE-D-SDK
 source wrappers/ros/devel/setup.bash
-roslaunch mynteye_wrapper_d mynteye.launch  stream_mode:=1 # stereo camera with 640x480
+roslaunch mynteye_wrapper_d vins_fusion.launch  stream_mode:=1 # stereo camera with 640x480
+```
+Open another terminal
+```
+cd ~/catkin_ws/src
+source ./devel/setup.bash
 roslaunch vins mynteye-d-stereo.launch
 ```
 ## Run vins-fusion with <span id = "avartasdkinstall">mynteye-avarta</span>
-### mono+imu fusion
+#### mono+imu fusion
 ```
-cd MYNT-EYE-S-SDK
+cd path/to/MYNT-EYE-S-SDK
 source wrappers/ros/devel/setup.bash
-roslaunch mynt_eye_ros_wrapper mynteye.launch
+roslaunch mynt_eye_ros_wrapper vins_fusion.launch
+```
+Open another terminal
+```
+cd ~/catkin_ws/src
+source ./devel/setup.bash
 roslaunch vins mynteye-avarta-mono-imu.launch
 ```
 
-### Stereo fusion
+#### Stereo fusion
 ```
-cd MYNT-EYE-S-SDK
+cd path/to/MYNT-EYE-S-SDK
 source wrappers/ros/devel/setup.bash
-roslaunch mynt_eye_ros_wrapper mynteye.launch
+roslaunch mynt_eye_ros_wrapper vins_fusion.launch
+```
+Open another terminal
+```
+cd ~/catkin_ws/src
+source ./devel/setup.bash
 roslaunch vins mynteye-avarta-stereo.launch
 ```
 
-### Stereo+imu fusion
-```
-cd MYNT-EYE-S-SDK
-source wrappers/ros/devel/setup.bash
-roslaunch mynt_eye_ros_wrapper mynteye.launch
-roslaunch vins mynteye-atarta-stereo.launch
-```
 **dataset link[vins_fusion](http://gofile.me/3Xa46/FpzGao2JY), password: vins_fusion**
 ---
 
