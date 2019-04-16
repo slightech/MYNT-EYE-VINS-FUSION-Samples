@@ -34,7 +34,7 @@ echo "source ~/catkin_ws/devel/setup.bash" >> ~/.bashrc
 source ~/.bashrc
 ```
 
-Then ,judge if your device type is mynteye-d ,mynteye-s or mynteye-avarta,then follow the following installation process: [Run vins-fusion with mynteye-s](#ssdkinstall) / [Run vins-fusion with mynteye-d](#dsdkinstall) / [Run vins-fusion with mynteye-avarta](#avartasdkinstall).
+Then ,judge if your device type is mynteye-d ,mynteye-s or mynteye-s2100,then follow the following installation process: [Run vins-fusion with mynteye-s](#ssdkinstall) / [Run vins-fusion with mynteye-d](#dsdkinstall) / [Run vins-fusion with mynteye-s2100](#avartasdkinstall).
 
 ## Run vins-fusion with <span id = "ssdkinstall">mynteye-s</span>
 
