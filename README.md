@@ -1,5 +1,30 @@
 # MYNT-EYE-VINS-FUSION
 
+<<<<<<< HEAD
+=======
+## Prerequisites
+### 1. **Ubuntu** and **ROS**
+Ubuntu 64-bit 16.04 or 18.04.
+ROS Kinetic or Melodic. [ROS Installation](http://wiki.ros.org/ROS/Installation)
+### 2. **Ceres Solver**
+Follow [Ceres Installation](http://ceres-solver.org/installation.html).
+```commandline
+cd ~
+git clone https://ceres-solver.googlesource.com/ceres-solver
+sudo apt-get -y install cmake libgoogle-glog-dev libatlas-base-dev libeigen3-dev libsuitesparse-dev
+sudo add-apt-repository ppa:bzindovic/suitesparse-bugfix-1319687
+sudo apt-get update && sudo apt-get install libsuitesparse-dev
+mkdir ceres-bin
+cd ceres-bin
+cmake ../ceres-solver
+make -j3
+sudo make install
+```
+### 3. **Install MYNTEYE SDK**
+Skip this if already installed.
+[S-SDK Installation](https://mynt-eye-s-sdk.readthedocs.io/en/latest/src/sdk/source_install_ubuntu.html), [D-SDK Installation](https://mynt-eye-d-sdk.readthedocs.io/en/latest/installation/build_linux.html)
+
+>>>>>>> test
 ## Install MYNT-EYE--FUSION-Sample
 ```
 mkdir -p ~/catkin_ws/src
@@ -23,8 +48,15 @@ Then ,judge if your device type is mynteye-d ,mynteye-s or mynteye-avarta,then f
 cd path/to/MYNT-EYE-S-SDK
 source wrappers/ros/devel/setup.bash
 roslaunch mynt_eye_ros_wrapper vins_fusion.launch
+<<<<<<< HEAD
 cd path/to/catkin_ws
 catkin_make
+=======
+```
+Open another terminal
+```
+cd ~/catkin_ws/src
+>>>>>>> test
 source ./devel/setup.bash
 roslaunch vins mynteye-s-mono-imu.launch
 ```
@@ -33,8 +65,15 @@ roslaunch vins mynteye-s-mono-imu.launch
 cd path/to/MYNT-EYE-S-SDK
 source wrappers/ros/devel/setup.bash
 roslaunch mynt_eye_ros_wrapper vins_fusion.launch
+<<<<<<< HEAD
 cd path/to/catkin_ws
 catkin_make
+=======
+```
+Open another terminal
+```
+cd ~/catkin_ws/src
+>>>>>>> test
 source ./devel/setup.bash
 roslaunch vins mynteye-s-stereo.launch
 ```
@@ -44,8 +83,15 @@ roslaunch vins mynteye-s-stereo.launch
 cd path/to/MYNT-EYE-S-SDK
 source wrappers/ros/devel/setup.bash
 roslaunch mynt_eye_ros_wrapper vins_fusion.launch
+<<<<<<< HEAD
 cd path/to/catkin_ws
 catkin_make
+=======
+```
+Open another terminal
+```
+cd ~/catkin_ws/src
+>>>>>>> test
 source ./devel/setup.bash
 roslaunch vins mynteye-s-stereo.launch
 ```
@@ -56,8 +102,15 @@ roslaunch vins mynteye-s-stereo.launch
 cd path/to/MYNT-EYE-D-SDK
 source wrappers/ros/devel/setup.bash
 roslaunch mynteye_wrapper_d vins_fusion.launch  stream_mode:=1 # stereo camera with 640x480
+<<<<<<< HEAD
 cd path/to/catkin_ws
 catkin_make
+=======
+```
+Open another terminal
+```
+cd ~/catkin_ws/src
+>>>>>>> test
 source ./devel/setup.bash
 roslaunch vins mynteye-d-mono-imu.launch
 ```
@@ -66,8 +119,15 @@ roslaunch vins mynteye-d-mono-imu.launch
 cd path/to/MYNT-EYE-D-SDK
 source wrappers/ros/devel/setup.bash
 roslaunch mynteye_wrapper_d vins_fusion.launch  stream_mode:=1 # stereo camera with 640x480
+<<<<<<< HEAD
 cd path/to/catkin_ws
 catkin_make
+=======
+```
+Open another terminal
+```
+cd ~/catkin_ws/src
+>>>>>>> test
 source ./devel/setup.bash
 roslaunch vins mynteye-d-stereo.launch
 ```
@@ -77,6 +137,7 @@ roslaunch vins mynteye-d-stereo.launch
 cd path/to/MYNT-EYE-D-SDK
 source wrappers/ros/devel/setup.bash
 roslaunch mynteye_wrapper_d vins_fusion.launch  stream_mode:=1 # stereo camera with 640x480
+<<<<<<< HEAD
 cd path/to/catkin_ws
 catkin_make
 source ./devel/setup.bash
@@ -105,6 +166,44 @@ source ./devel/setup.bash
 roslaunch vins mynteye-avarta-stereo.launch
 ```
 
+=======
+```
+Open another terminal
+```
+cd ~/catkin_ws/src
+source ./devel/setup.bash
+roslaunch vins mynteye-d-stereo.launch
+```
+## Run vins-fusion with <span id = "avartasdkinstall">mynteye-s2100</span>
+### mono+imu fusion
+```
+cd path/to/MYNT-EYE-S-SDK
+source wrappers/ros/devel/setup.bash
+
+roslaunch mynt_eye_ros_wrapper vins_fusion.launch
+```
+Open another terminal
+```
+cd ~/catkin_ws/src
+source ./devel/setup.bash
+roslaunch vins mynteye-s2100-mono-imu.launch
+```
+
+#### Stereo fusion
+```
+cd path/to/MYNT-EYE-S-SDK
+source wrappers/ros/devel/setup.bash
+roslaunch mynt_eye_ros_wrapper mynteye.launch
+roslaunch vins mynteye-s2100-stereo.launch
+```
+Open another terminal
+```
+cd ~/catkin_ws/src
+source ./devel/setup.bash
+roslaunch vins mynteye-s2100-stereo.launch
+```
+
+>>>>>>> test
 **dataset link[vins_fusion](http://gofile.me/3Xa46/FpzGao2JY), password: vins_fusion**
 ---
 
