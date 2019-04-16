@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-    <arg name="config_file" default="$(find vins)/../config/mynteye-avarta/mynt_mono_config.yaml" />
+    <arg name="config_file" default="$(find vins)/../config/mynteye-s2100/mynt_mono_config.yaml" />
 
     <node name="vins_estimator" pkg="vins" type="vins_s_node" output="screen" >
       <param name="config_file" value="$(arg config_file)" />

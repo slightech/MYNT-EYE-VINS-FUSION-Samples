@@ -63,13 +63,13 @@ source wrappers/ros/devel/setup.bash
 roslaunch mynteye_wrapper_d mynteye.launch  stream_mode:=1 # stereo camera with 640x480
 roslaunch vins mynteye-d-stereo.launch
 ```
-## Run vins-fusion with <span id = "avartasdkinstall">mynteye-avarta</span>
+## Run vins-fusion with <span id = "avartasdkinstall">mynteye-s2100</span>
 ### mono+imu fusion
 ```
 cd MYNT-EYE-S-SDK
 source wrappers/ros/devel/setup.bash
 roslaunch mynt_eye_ros_wrapper mynteye.launch
-roslaunch vins mynteye-avarta-mono-imu.launch
+roslaunch vins mynteye-s2100-mono-imu.launch
 ```
 
 ### Stereo fusion
@@ -77,7 +77,7 @@ roslaunch vins mynteye-avarta-mono-imu.launch
 cd MYNT-EYE-S-SDK
 source wrappers/ros/devel/setup.bash
 roslaunch mynt_eye_ros_wrapper mynteye.launch
-roslaunch vins mynteye-avarta-stereo.launch
+roslaunch vins mynteye-s2100-stereo.launch
 ```
 
 ### Stereo+imu fusion
@@ -85,7 +85,7 @@ roslaunch vins mynteye-avarta-stereo.launch
 cd MYNT-EYE-S-SDK
 source wrappers/ros/devel/setup.bash
 roslaunch mynt_eye_ros_wrapper mynteye.launch
-roslaunch vins mynteye-atarta-stereo.launch
+roslaunch vins mynteye-s2100-stereo.launch
 ```
 **dataset link[vins_fusion](http://gofile.me/3Xa46/FpzGao2JY), password: vins_fusion**
 ---
