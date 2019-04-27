@@ -48,7 +48,7 @@ roslaunch mynt_eye_ros_wrapper vins_fusion.launch
 ```
 Open another terminal
 ```
-cd ~/catkin_ws/src
+cd ~/catkin_ws
 source ./devel/setup.bash
 roslaunch vins mynteye-s-mono-imu.launch
 ```
@@ -60,7 +60,7 @@ roslaunch mynt_eye_ros_wrapper vins_fusion.launch
 ```
 Open another terminal
 ```
-cd ~/catkin_ws/src
+cd ~/catkin_ws
 source ./devel/setup.bash
 roslaunch vins mynteye-s-stereo.launch
 ```
@@ -73,7 +73,7 @@ roslaunch mynt_eye_ros_wrapper vins_fusion.launch
 ```
 Open another terminal
 ```
-cd ~/catkin_ws/src
+cd ~/catkin_ws
 source ./devel/setup.bash
 roslaunch vins mynteye-s-stereo.launch
 ```
@@ -87,7 +87,7 @@ roslaunch mynteye_wrapper_d vins_fusion.launch  stream_mode:=1 # stereo camera w
 ```
 Open another terminal
 ```
-cd ~/catkin_ws/src
+cd ~/catkin_ws
 source ./devel/setup.bash
 roslaunch vins mynteye-d-mono-imu.launch
 ```
@@ -99,7 +99,7 @@ roslaunch mynteye_wrapper_d vins_fusion.launch  stream_mode:=1 # stereo camera w
 ```
 Open another terminal
 ```
-cd ~/catkin_ws/src
+cd ~/catkin_ws
 source ./devel/setup.bash
 roslaunch vins mynteye-d-stereo.launch
 ```
@@ -112,7 +112,7 @@ roslaunch mynteye_wrapper_d vins_fusion.launch  stream_mode:=1 # stereo camera w
 ```
 Open another terminal
 ```
-cd ~/catkin_ws/src
+cd ~/catkin_ws
 source ./devel/setup.bash
 roslaunch vins mynteye-d-stereo.launch
 ```
@@ -121,12 +121,11 @@ roslaunch vins mynteye-d-stereo.launch
 ```
 cd path/to/MYNT-EYE-S-SDK
 source wrappers/ros/devel/setup.bash
-
 roslaunch mynt_eye_ros_wrapper vins_fusion.launch
 ```
 Open another terminal
 ```
-cd ~/catkin_ws/src
+cd ~/catkin_ws
 source ./devel/setup.bash
 roslaunch vins mynteye-s2100-mono-imu.launch
 ```
@@ -140,7 +139,7 @@ roslaunch vins mynteye-s2100-stereo.launch
 ```
 Open another terminal
 ```
-cd ~/catkin_ws/src
+cd ~/catkin_ws
 source ./devel/setup.bash
 roslaunch vins mynteye-s2100-stereo.launch
 ```
