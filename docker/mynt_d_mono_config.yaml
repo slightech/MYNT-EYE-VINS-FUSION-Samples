@@ -9,9 +9,7 @@ imu_topic: "/mynteye/imu/data_raw"
 image0_topic: "/mynteye/left/image_raw"
 output_path: "/your/local/path/"
 
-imu_info_srv: "/mynteye_wrapper_d_node/get_params"
-imu_info_intri_arg: "2"
-imu_info_extri_arg: "3"
+mynteye_imu_srv: "d"
 
 image_width: 752
 image_height: 480
@@ -60,7 +58,7 @@ estimate_extrinsic: 0   # 0  Have an accurate extrinsic parameters. We will trus
                         # 1  Have an initial guess about extrinsic parameters. We will optimize around your initial guess.
 
 # ==================================================================
-# Following contents whill be auto adapter when you use mynteye sdk.
+# Following contents will be auto adapter when you use mynteye sdk.
 # ==================================================================
 
 body_T_cam0: !!opencv-matrix

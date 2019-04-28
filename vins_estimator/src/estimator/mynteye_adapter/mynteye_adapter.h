@@ -38,18 +38,26 @@
 
 class MynteyeAdapter {
  public:
-  MynteyeAdapter() {}
+  MynteyeAdapter(const std::string &config_path, const std::string &imu_srv)
+      :config_path_(config_path), imu_srv_(imu_srv) {}
   ~MynteyeAdapter() {}
   bool readmynteyeConfig();
   inline const std::string getConfigPath() const {
     return config_path_;
   }
+  inline const std::string getImusrv() const {
+    return imu_srv_;
+  }
   inline bool setConfigPath(const std::string& config_path) {
     config_path_ = config_path;
     return true;
+  }
+  inline bool setMynteyeIMUsrv(const std::string &srv) {
+    imu_srv_ = srv;
   }
  private:
   ros::Subscriber sub1L;
   ros::Subscriber sub1R;
   std::string config_path_;
+  std::string imu_srv_;
 };

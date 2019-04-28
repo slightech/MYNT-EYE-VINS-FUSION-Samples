@@ -73,7 +73,7 @@ estimate_extrinsic: 0   # 0  Have an accurate extrinsic parameters. We will trus
                         # 1  Have an initial guess about extrinsic parameters. We will optimize around your initial guess.
 
 # ==================================================================
-# Following contents whill be auto adapter when you use mynteye sdk.
+# Following contents will be auto adapter when you use mynteye sdk.
 # ==================================================================
 
 #cam0_calib: "left_pinhole.yaml"

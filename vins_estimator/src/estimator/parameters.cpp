@@ -62,17 +62,6 @@ T readParam(ros::NodeHandle &n, std::string name) {
 
 void readParameters(std::string config_file)
 {
-    auto adapter = new MynteyeAdapter;
-    adapter -> setConfigPath(config_file);
-    bool parameters_adapter_res =  adapter->readmynteyeConfig();
-
-    int pn__ = config_file.find_last_of('/');
-    std::string configPath__ = config_file.substr(0, pn__);
-    std::string device_info_path_left =
-        configPath__ + "/" + CLIB_INFO_FILE_NAME_L;
-    std::string device_info_path_right =
-        configPath__ + "/" + CLIB_INFO_FILE_NAME_R;
-
     FILE *fh = fopen(config_file.c_str(), "r");
     if (fh == NULL) {
         ROS_WARN("config_file dosen't exist; wrong config_file path");
@@ -85,6 +74,18 @@ void readParameters(std::string config_file)
     if (!fsSettings.isOpened()) {
         std::cerr << "ERROR: Wrong path to settings" << std::endl;
     }
+
+    std::string mynteye_imu_srv;
+    fsSettings["mynteye_imu_srv"] >> mynteye_imu_srv;
+    auto adapter = new MynteyeAdapter(config_file, mynteye_imu_srv);
+    bool parameters_adapter_res =  adapter->readmynteyeConfig();
+
+    int pn__ = config_file.find_last_of('/');
+    std::string configPath__ = config_file.substr(0, pn__);
+    std::string device_info_path_left =
+        configPath__ + "/" + CLIB_INFO_FILE_NAME_L;
+    std::string device_info_path_right =
+        configPath__ + "/" + CLIB_INFO_FILE_NAME_R;
 
     fsSettings["image0_topic"] >> IMAGE0_TOPIC;
     fsSettings["image1_topic"] >> IMAGE1_TOPIC;

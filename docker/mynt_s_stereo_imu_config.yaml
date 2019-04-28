@@ -6,11 +6,11 @@ imu: 1
 num_of_cam: 2
 
 imu_topic: "/mynteye/imu/data_raw"
-image0_topic: "/mynteye/left/image_color" 
-image1_topic: "/mynteye/right/image_color"
+image0_topic: "/mynteye/left/image_raw"
+image1_topic: "/mynteye/right/image_raw"
 output_path: "/your/local/path/"
 
-mynteye_imu_srv: "d"
+mynteye_imu_srv: "s"
 
 image_width: 752
 image_height: 480
