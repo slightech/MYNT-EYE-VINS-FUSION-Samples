@@ -75,8 +75,27 @@ void ConversionFromDeviceVINSFUSION(const std::string& path,
 }
 
 bool ConversionIMUFromDeviceVINSFUSION(
-    const std::string& path, const Config &config) {
-  return false;
+    const std::string& path, const Config &config, const Config &config_r2l) {
+  std::cout << "device_info_path_imu: " << path << std::endl;
+  cv::FileStorage imu_params_fs(path, cv::FileStorage::WRITE);
+  double l2imu_proj[4][4] = { {(double)config["rotation"][0], (double)config["rotation"][1], (double)config["rotation"][2], (double)config["translation"][0] / 1000.0},
+                              {(double)config["rotation"][3], (double)config["rotation"][4], (double)config["rotation"][5], (double)config["translation"][1] / 1000.0},
+                              {(double)config["rotation"][6], (double)config["rotation"][7], (double)config["rotation"][8], (double)config["translation"][2] / 1000.0},
+                              {0., 0., 0., 1.} };
+  
+  double l2r[4][4] = { {(double)config_r2l["rotation"][0], (double)config_r2l["rotation"][1], (double)config_r2l["rotation"][2], (double)config_r2l["translation"][0] / 1000.0},
+                              {(double)config_r2l["rotation"][3], (double)config_r2l["rotation"][4], (double)config_r2l["rotation"][5], (double)config_r2l["translation"][1] / 1000.0},
+                              {(double)config_r2l["rotation"][6], (double)config_r2l["rotation"][7], (double)config_r2l["rotation"][8], (double)config_r2l["translation"][2] / 1000.0},
+                              {0., 0., 0., 1.} };
+
+  cv::Mat body_T_cam0(4, 4, CV_64FC1, l2imu_proj);
+  cv::Mat l2r_pr(4, 4, CV_64FC1, l2r);
+  // std::cout << body_T_cam0 << std::endl;
+  imu_params_fs << "body_T_cam0" << body_T_cam0;
+  imu_params_fs << "body_T_cam1" << body_T_cam0*l2r_pr;
+
+  imu_params_fs.release();
+  return true;
 }
 
 std::string get_d_imu_intri_info() {
@@ -113,6 +132,23 @@ std::string get_d_imu_extri_info() {
   }
 }
 
+std::string get_d_extri_l2r() {
+  ros::NodeHandle ns;
+  ros::ServiceClient client = ns.serviceClient<mynteye_wrapper_d::GetParams>("/mynteye_wrapper_d_node/get_params"); // NOLINT
+  mynteye_wrapper_d::GetParams srv;
+  // IMG_INTRINSICS = 0u,
+  // IMG_EXTRINSICS_RTOL = 1u,
+  // IMU_INTRINSICS = 2u,
+  // IMU_EXTRINSICS = 3u,
+  srv.request.key = 1u;
+  if (client.call(srv)) {
+    return srv.response.value;
+  } else {
+    ROS_ERROR("Failed to call service GetParams, make sure you have launch mynteye device SDK nodelet");  // NOLINT
+    return "null";
+  }
+}
+
 std::string get_s_imu_intri_info() {
     ros::NodeHandle ns;
     ros::ServiceClient client =
@@ -133,6 +169,34 @@ std::string get_s_imu_intri_info() {
     // IMU_INTRINSICS = 12u,
     // IMU_EXTRINSICS = 13u,
     srv.request.key = 12u;
+    if (client.call(srv)) {
+      return srv.response.value;
+    } else {
+      ROS_ERROR("Failed to call service GetInfo , make sure you have launch mynteye device SDK nodelet");  // NOLINT
+      return "null";
+    }
+}
+
+std::string get_s_extri_l2r() {
+    ros::NodeHandle ns;
+    ros::ServiceClient client =
+        ns.serviceClient<mynt_eye_ros_wrapper::GetInfo>("/mynteye/get_info");
+    mynt_eye_ros_wrapper::GetInfo srv;
+    // DEVICE_NAME = 0u,
+    // SERIAL_NUMBER = 1u,
+    // FIRMWARE_VERSION = 2u,
+    // HARDWARE_VERSION = 3u,
+    // SPEC_VERSION = 4u,
+    // LENS_TYPE = 5u,
+    // IMU_TYPE = 6u,
+    // NOMINAL_BASELINE = 7u,
+    // AUXILIARY_CHIP_VERSION = 8u,
+    // ISP_VERSION = 9u,
+    // IMG_INTRINSICS = 10u,
+    // IMG_EXTRINSICS_RTOL = 11u,
+    // IMU_INTRINSICS = 12u,
+    // IMU_EXTRINSICS = 13u,
+    srv.request.key = 11u;
     if (client.call(srv)) {
       return srv.response.value;
     } else {
@@ -170,42 +234,47 @@ std::string get_s_imu_extri_info() {
 }
 
 bool MynteyeAdapter::readmynteyeConfig() {
-  std::cout << "now try to read mynteye device param ..." << std::endl;
+  ROS_INFO("Now try to read mynteye device param ...");
   ros::NodeHandle n("~");
+  config_file = getConfigPath();
 
   Config imu_intri_info;
   Config imu_extri_info;
+  Config extri_l2r;
   std::string imu_intri = "null";
   std::string imu_extri = "null";
+  std::string extri_l2r_string = "null";
   if (imu_srv_ == "s") {
     imu_intri = get_s_imu_intri_info();
     imu_extri = get_s_imu_extri_info();
+    extri_l2r_string = get_s_extri_l2r();
   } else if (imu_srv_ == "d") {
     imu_intri = get_d_imu_intri_info();
     imu_extri = get_d_imu_extri_info();
+    extri_l2r_string = get_d_extri_l2r();
   }
 
   if (imu_intri != "null" && imu_extri != "null") {
     imu_intri_info = parse_string(imu_intri.c_str(), JSON, "log");
     imu_extri_info = parse_string(imu_extri.c_str(), JSON, "log");
+    extri_l2r = parse_string(extri_l2r_string.c_str(), JSON, "log");
     int pn__ = config_file.find_last_of('/');
     std::string configPath__ = config_file.substr(0, pn__);
     std::string device_info_path_imu =
         configPath__ + "/" + IMU_PARAMS_FILE_NAME;
     if (ConversionIMUFromDeviceVINSFUSION(
-            device_info_path_imu, imu_extri_info)) {
-      std::cout << "Imu intrinsics: \n" << imu_intri_info << std::endl;
-      std::cout << "Imu extrinsics: \n" << imu_extri_info << std::endl;
+            device_info_path_imu, imu_extri_info, extri_l2r)) {
+      std::cout << "L2Imu extrinsics: \n" << imu_extri_info << std::endl;
+      std::cout << "L2R extrinsics: \n" << extri_l2r << std::endl;
+      ROS_INFO("Imu params is load to build the params");
+      imu_res = true;
     }
   } else {
     ROS_WARN("check the list below:");
     ROS_WARN("1. the mynteye device ROS nodelet not been launched");
     ROS_WARN("2. the mynteye device SDK version may be too old");
     ROS_WARN("3. the device calib data may not correct");
-    return false;
   }
-
-  config_file = getConfigPath();
   // Create a ROS subscriber for the input point cloud
   sub1L = n.subscribe(info_l, 100, cameraParamsLCallback,
                     ros::TransportHints().tcpNoDelay());

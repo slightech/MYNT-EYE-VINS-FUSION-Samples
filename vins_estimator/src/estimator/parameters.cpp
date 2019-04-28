@@ -79,13 +79,18 @@ void readParameters(std::string config_file)
     fsSettings["mynteye_imu_srv"] >> mynteye_imu_srv;
     auto adapter = new MynteyeAdapter(config_file, mynteye_imu_srv);
     bool parameters_adapter_res =  adapter->readmynteyeConfig();
-
+    bool parameters_adapter_imu_res = false;
+    if (parameters_adapter_res) {
+        parameters_adapter_imu_res = adapter->getImuRes();
+    }
     int pn__ = config_file.find_last_of('/');
     std::string configPath__ = config_file.substr(0, pn__);
     std::string device_info_path_left =
         configPath__ + "/" + CLIB_INFO_FILE_NAME_L;
     std::string device_info_path_right =
         configPath__ + "/" + CLIB_INFO_FILE_NAME_R;
+    std::string device_info_path_imu =
+        configPath__ + "/" + IMU_PARAMS_FILE_NAME;
 
     fsSettings["image0_topic"] >> IMAGE0_TOPIC;
     fsSettings["image1_topic"] >> IMAGE1_TOPIC;
@@ -135,7 +140,18 @@ void readParameters(std::string config_file)
             ROS_WARN(" fix extrinsic param ");
 
         cv::Mat cv_T;
-        fsSettings["body_T_cam0"] >> cv_T;
+        if (parameters_adapter_imu_res) {
+            cv::FileStorage fsimuSettings(device_info_path_imu,
+                cv::FileStorage::READ);
+            if (fsimuSettings.isOpened()) {
+                fsimuSettings["body_T_cam0"] >>  cv_T;
+            } else {
+                fsSettings["body_T_cam0"] >> cv_T;
+            }
+            fsimuSettings.release();
+        } else {
+            fsSettings["body_T_cam0"] >> cv_T;
+        }
         Eigen::Matrix4d T;
         cv::cv2eigen(cv_T, T);
         RIC.push_back(T.block<3, 3>(0, 0));
@@ -177,7 +193,18 @@ void readParameters(std::string config_file)
         }
 
         cv::Mat cv_T;
-        fsSettings["body_T_cam1"] >> cv_T;
+        if (parameters_adapter_imu_res) {
+            cv::FileStorage fsimuSettings(device_info_path_imu,
+                cv::FileStorage::READ);
+            if (fsimuSettings.isOpened()) {
+                fsimuSettings["body_T_cam1"] >>  cv_T;
+            } else {
+                fsSettings["body_T_cam1"] >> cv_T;
+            }
+            fsimuSettings.release();
+        } else {
+            fsSettings["body_T_cam1"] >> cv_T;
+        }
         Eigen::Matrix4d T;
         cv::cv2eigen(cv_T, T);
         RIC.push_back(T.block<3, 3>(0, 0));
