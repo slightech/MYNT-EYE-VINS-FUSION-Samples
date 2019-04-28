@@ -20,8 +20,8 @@ static bool check_success_l_tag;
 static bool check_success_r_tag;
 static std::string config_file = "";
 
-const std::string info_l = "/mynteye/left/camera_info";
-const std::string info_r = "/mynteye/right/camera_info";
+const std::string info_l = INFO_L;
+const std::string info_r = INFO_R;
 
 void cameraParamsLCallback(const sensor_msgs::CameraInfoConstPtr &info_msg);
 void cameraParamsRCallback(const sensor_msgs::CameraInfoConstPtr &info_msg);
@@ -97,7 +97,7 @@ void cameraParamsLCallback(
     int pn__ = config_file.find_last_of('/');
     std::string configPath__ = config_file.substr(0, pn__);
     std::string device_info_path_left =
-        configPath__ + "/device_params_left.yaml";
+        configPath__ + "/" + CLIB_INFO_FILE_NAME_L;
     ConversionFromDeviceVINSFUSION(device_info_path_left, info_msg);
     check_success_l_tag = true;
   }
@@ -112,7 +112,7 @@ void cameraParamsRCallback(
     int pn__ = config_file.find_last_of('/');
     std::string configPath__ = config_file.substr(0, pn__);
     std::string device_info_path_right =
-        configPath__ + "/device_params_right.yaml";
+        configPath__ + "/" + CLIB_INFO_FILE_NAME_R;
     ConversionFromDeviceVINSFUSION(device_info_path_right, info_msg);
     check_success_r_tag = true;
   }

@@ -30,6 +30,12 @@
 #include <fstream>
 #include <map>
 
+#define INFO_L "/mynteye/left/camera_info";
+#define INFO_R "/mynteye/right/camera_info";
+#define CLIB_INFO_FILE_NAME_L "device_params_left.yaml"
+#define CLIB_INFO_FILE_NAME_R "device_params_right.yaml"
+#define IMU_PARAMS_FILE_NAME "device_imu_params.yaml"
+
 class MynteyeAdapter {
  public:
   MynteyeAdapter() {}

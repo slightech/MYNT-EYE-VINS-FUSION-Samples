@@ -2,32 +2,19 @@
 
 #common parameters
 #support: 1 imu 1 cam; 1 imu 2 cam: 2 cam; 
-imu: 1         
-num_of_cam: 1  
+imu: 1
+num_of_cam: 1
 
 imu_topic: "/mynteye/imu/data_raw"
 image0_topic: "/mynteye/left/image_raw"
-output_path: "/home/zhangs/vins_fusion/"
+output_path: "/your/local/path/"
 
-#cam0_calib: "left_equ.yaml"
-#cam0_calib: "left_pinhole.yaml"
-cam0_calib: "left_mei.yaml"
+imu_info_srv: "/mynteye_wrapper_d_node/get_params"
+imu_info_intri_arg: "2"
+imu_info_extri_arg: "3"
+
 image_width: 752
 image_height: 480
-   
-
-# Extrinsic parameter between IMU and Camera.
-estimate_extrinsic: 1   # 0  Have an accurate extrinsic parameters. We will trust the following imu^R_cam, imu^T_cam, don't change it.
-                        # 1  Have an initial guess about extrinsic parameters. We will optimize around your initial guess.
-
-body_T_cam0: !!opencv-matrix
-   rows: 4
-   cols: 4
-   dt: d
-   data: [-0.0064662, -0.99994994, -0.00763565, 0.00533646,
-           0.99997909, -0.00646566, -0.00009558, -0.04302922,
-           0.0000462, -0.00763611, 0.99997084, 0.02303124,
-           0, 0, 0, 1]
 
 #Multiple thread support
 multiple_thread: 1
@@ -65,5 +52,26 @@ td: 0.0                             # initial value of time offset. unit: s. rea
 
 #loop closure parameters
 load_previous_pose_graph: 0        # load and reuse previous pose graph; load from 'pose_graph_save_path'
-pose_graph_save_path: "/home/zhangs/vins_fusion/pose_graph/" # save and load path
-save_image: 1                   # save image in pose graph for visualization prupose; you can close this function by setting 0 
+pose_graph_save_path: "/dev/null" # save and load path
+save_image: 1                   # save image in pose graph for visualization prupose; you can close this function by setting 0
+
+# Extrinsic parameter between IMU and Camera.
+estimate_extrinsic: 0   # 0  Have an accurate extrinsic parameters. We will trust the following imu^R_cam, imu^T_cam, don't change it.
+                        # 1  Have an initial guess about extrinsic parameters. We will optimize around your initial guess.
+
+# ==================================================================
+# Following contents whill be auto adapter when you use mynteye sdk.
+# ==================================================================
+
+body_T_cam0: !!opencv-matrix
+   rows: 4
+   cols: 4
+   dt: d
+   data: [-0.0064662, -0.99994994, -0.00763565, 0.00533646,
+           0.99997909, -0.00646566, -0.00009558, -0.04302922,
+           0.0000462, -0.00763611, 0.99997084, 0.02303124,
+           0, 0, 0, 1]
+
+#cam0_calib: "left_equ.yaml"
+#cam0_calib: "left_pinhole.yaml"
+cam0_calib: "left_mei.yaml"
