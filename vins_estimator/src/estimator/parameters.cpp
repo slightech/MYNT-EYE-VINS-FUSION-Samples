@@ -8,6 +8,7 @@
  *******************************************************/
 
 #include "parameters.h"
+#include "mynteye_adapter/mynteye_adapter.h"
 
 double INIT_DEPTH;
 double MIN_PARALLAX;
@@ -65,11 +66,20 @@ T readParam(ros::NodeHandle &n, std::string name)
 
 void readParameters(std::string config_file)
 {
+    auto adapter = new MynteyeAdapter;
+    adapter -> setConfigPath(config_file);
+    bool parameters_adapter_res =  adapter->readmynteyeConfig();
+
+    int pn__ = config_file.find_last_of('/');
+    std::string configPath__ = config_file.substr(0, pn__);
+    std::string device_info_path_left = configPath__ + "/device_params_left.yaml";
+    std::string device_info_path_right = configPath__ + "/device_params_right.yaml";
+
     FILE *fh = fopen(config_file.c_str(),"r");
     if(fh == NULL){
         ROS_WARN("config_file dosen't exist; wrong config_file path");
         ROS_BREAK();
-        return;          
+        return;
     }
     fclose(fh);
 
@@ -151,21 +161,30 @@ void readParameters(std::string config_file)
 
     int pn = config_file.find_last_of('/');
     std::string configPath = config_file.substr(0, pn);
-    
+
     std::string cam0Calib;
     fsSettings["cam0_calib"] >> cam0Calib;
     std::string cam0Path = configPath + "/" + cam0Calib;
-    CAM_NAMES.push_back(cam0Path);
+
+    if (parameters_adapter_res) {
+        CAM_NAMES.push_back(device_info_path_left);
+    } else {
+        CAM_NAMES.push_back(cam0Path);
+    }
 
     if(NUM_OF_CAM == 2)
     {
         STEREO = 1;
         std::string cam1Calib;
         fsSettings["cam1_calib"] >> cam1Calib;
-        std::string cam1Path = configPath + "/" + cam1Calib; 
+        std::string cam1Path = configPath + "/" + cam1Calib;
         //printf("%s cam1 path\n", cam1Path.c_str() );
-        CAM_NAMES.push_back(cam1Path);
-        
+        if (parameters_adapter_res) {
+            CAM_NAMES.push_back(device_info_path_right);
+        } else {
+            CAM_NAMES.push_back(cam1Path);
+        }
+
         cv::Mat cv_T;
         fsSettings["body_T_cam1"] >> cv_T;
         Eigen::Matrix4d T;
@@ -195,6 +214,6 @@ void readParameters(std::string config_file)
         ESTIMATE_TD = 0;
         printf("no imu, fix extrinsic param; no time offset calibration\n");
     }
-
+    delete adapter;
     fsSettings.release();
 }

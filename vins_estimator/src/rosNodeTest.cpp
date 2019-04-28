@@ -21,6 +21,10 @@
 #include "estimator/parameters.h"
 #include "utility/visualization.h"
 
+#include <image_transport/image_transport.h>
+#include <sensor_msgs/image_encodings.h>
+#include <sensor_msgs/Imu.h>
+
 Estimator estimator;
 
 queue<sensor_msgs::ImuConstPtr> imu_buf;

@@ -14,3 +14,6 @@ result_gps.txt
 2*.txt
 camera_camera_calib.yaml
 camera_chessboard_data.dat
+
+docker/device_params_left.yaml
+docker/device_params_right.yaml
