@@ -6,10 +6,10 @@ imu: 1
 num_of_cam: 1
 
 imu_topic: "/mynteye/imu/data_raw"
-image0_topic: "/mynteye/left/image_raw"
+image0_topic: "/mynteye/left/image_color"
 output_path: "/your/local/path/"
 
-image_width: 752
+image_width: 640
 image_height: 480
 
 use_mynteye_adapter: 1
