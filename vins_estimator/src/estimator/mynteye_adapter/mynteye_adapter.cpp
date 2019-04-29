@@ -82,17 +82,18 @@ bool ConversionIMUFromDeviceVINSFUSION(
                               {(double)config["rotation"][3], (double)config["rotation"][4], (double)config["rotation"][5], (double)config["translation"][1] / 1000.0},
                               {(double)config["rotation"][6], (double)config["rotation"][7], (double)config["rotation"][8], (double)config["translation"][2] / 1000.0},
                               {0., 0., 0., 1.} };
-  
   double l2r[4][4] = { {(double)config_r2l["rotation"][0], (double)config_r2l["rotation"][1], (double)config_r2l["rotation"][2], (double)config_r2l["translation"][0] / 1000.0},
-                              {(double)config_r2l["rotation"][3], (double)config_r2l["rotation"][4], (double)config_r2l["rotation"][5], (double)config_r2l["translation"][1] / 1000.0},
-                              {(double)config_r2l["rotation"][6], (double)config_r2l["rotation"][7], (double)config_r2l["rotation"][8], (double)config_r2l["translation"][2] / 1000.0},
-                              {0., 0., 0., 1.} };
+                       {(double)config_r2l["rotation"][3], (double)config_r2l["rotation"][4], (double)config_r2l["rotation"][5], (double)config_r2l["translation"][1] / 1000.0},
+                       {(double)config_r2l["rotation"][6], (double)config_r2l["rotation"][7], (double)config_r2l["rotation"][8], (double)config_r2l["translation"][2] / 1000.0},
+                       {0., 0., 0., 1.} };
 
   cv::Mat body_T_cam0(4, 4, CV_64FC1, l2imu_proj);
   cv::Mat l2r_pr(4, 4, CV_64FC1, l2r);
-  // std::cout << body_T_cam0 << std::endl;
+  cv::Mat l2r_pr_n(4, 4, CV_64FC1);
+  cv::invert(l2r_pr, l2r_pr_n);
+
   imu_params_fs << "body_T_cam0" << body_T_cam0;
-  imu_params_fs << "body_T_cam1" << body_T_cam0*l2r_pr;
+  imu_params_fs << "body_T_cam1" << body_T_cam0 * l2r_pr_n;
 
   imu_params_fs.release();
   return true;
