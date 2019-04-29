@@ -76,6 +76,11 @@ void ConversionFromDeviceVINSFUSION(const std::string& path,
 
 bool ConversionIMUFromDeviceVINSFUSION(
     const std::string& path, const Config &config, const Config &config_r2l) {
+    if (abs((double)config["rotation"][0]) < 0.0000001) {
+      ROS_WARN("The imu extri param is invalid!, you shoud calib the imu extri manually!! and fill it to [%s]", config_file.c_str());
+      return false;
+    }
+
   std::cout << "device_info_path_imu: " << path << std::endl;
   cv::FileStorage imu_params_fs(path, cv::FileStorage::WRITE);
   double l2imu_proj[4][4] = { {(double)config["rotation"][0], (double)config["rotation"][1], (double)config["rotation"][2], (double)config["translation"][0] / 1000.0},
@@ -271,10 +276,12 @@ bool MynteyeAdapter::readmynteyeConfig() {
       imu_res = true;
     }
   } else {
-    ROS_WARN("check the list below:");
-    ROS_WARN("1. the mynteye device ROS nodelet not been launched");
-    ROS_WARN("2. the mynteye device SDK version may be too old");
-    ROS_WARN("3. the device calib data may not correct");
+    if (imu_srv_ == "s" || imu_srv_ == "d") {
+      ROS_WARN("check the list below:");
+      ROS_WARN("1. the mynteye device ROS nodelet not been launched");
+      ROS_WARN("2. the mynteye device SDK version may be too old");
+      ROS_WARN("3. the device calib data may not correct");
+    }
   }
   // Create a ROS subscriber for the input point cloud
   sub1L = n.subscribe(info_l, 100, cameraParamsLCallback,
@@ -288,6 +295,7 @@ bool MynteyeAdapter::readmynteyeConfig() {
     sleep(1);
     if (check_success_l_tag && check_success_r_tag) return true;
   }
+  ROS_WARN("read mynteye img params fialed! \nyou shoud calib the img extri manually!! and fill it to [%s]", config_file.c_str());
   return false;
 }
 

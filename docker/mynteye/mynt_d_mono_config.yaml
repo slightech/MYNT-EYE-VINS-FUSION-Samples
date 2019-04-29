@@ -9,10 +9,11 @@ imu_topic: "/mynteye/imu/data_raw"
 image0_topic: "/mynteye/left/image_raw"
 output_path: "/your/local/path/"
 
-mynteye_imu_srv: "d"
-
 image_width: 752
 image_height: 480
+
+use_mynteye_adapter: 1
+mynteye_imu_srv: "d"
 
 #Multiple thread support
 multiple_thread: 1

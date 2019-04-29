@@ -77,11 +77,16 @@ void readParameters(std::string config_file)
 
     std::string mynteye_imu_srv;
     fsSettings["mynteye_imu_srv"] >> mynteye_imu_srv;
-    auto adapter = new MynteyeAdapter(config_file, mynteye_imu_srv);
-    bool parameters_adapter_res =  adapter->readmynteyeConfig();
+    int mynteye_enable = (int)fsSettings["use_mynteye_adapter"];
+    bool parameters_adapter_res = false;
     bool parameters_adapter_imu_res = false;
-    if (parameters_adapter_res) {
-        parameters_adapter_imu_res = adapter->getImuRes();
+    MynteyeAdapter* adapter = nullptr;
+    if (mynteye_enable) {
+        adapter = new MynteyeAdapter(config_file, mynteye_imu_srv);
+        parameters_adapter_res =  adapter->readmynteyeConfig();
+        if (parameters_adapter_res) {
+            parameters_adapter_imu_res = adapter->getImuRes();
+        }
     }
     int pn__ = config_file.find_last_of('/');
     std::string configPath__ = config_file.substr(0, pn__);

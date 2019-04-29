@@ -13,6 +13,8 @@ output_path: "/your/local/path/"
 image_width: 752
 image_height: 480
 
+use_mynteye_adapter: 1
+
 body_T_cam0: !!opencv-matrix
    rows: 4
    cols: 4
