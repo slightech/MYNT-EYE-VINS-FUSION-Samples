@@ -87,7 +87,7 @@ bool ConversionIMUFromDeviceVINSFUSION(
   } else if (tp == "s2") {
     fg = 1000.0;
   } else if (tp == "s1") {
-    fg = 1.0;
+    fg = 10.0;
   } else {
     return false;
   }
