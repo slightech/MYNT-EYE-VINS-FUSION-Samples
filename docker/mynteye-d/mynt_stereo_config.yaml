@@ -14,6 +14,7 @@ image_width: 640
 image_height: 480
 
 use_mynteye_adapter: 1
+mynteye_imu_srv: "d"
 
 body_T_cam0: !!opencv-matrix
    rows: 4
