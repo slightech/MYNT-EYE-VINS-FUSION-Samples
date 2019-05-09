@@ -25,6 +25,7 @@ static bool check_tag;
 static bool check_success_l_tag;
 static bool check_success_r_tag;
 static std::string config_file = "";
+std::string tp = "";
 
 const std::string info_l = INFO_L;
 const std::string info_r = INFO_R;
@@ -80,16 +81,24 @@ bool ConversionIMUFromDeviceVINSFUSION(
       ROS_WARN("The imu extri param is invalid!, you shoud calib the imu extri manually!! and fill it to [%s]", config_file.c_str());
       return false;
     }
+  double fg = 0.0;
+  if (tp == "d") {
+    fg = 1000.0;
+  } else if(tp == "s") {
+    fg = 1.0;
+  } else {
+    return false;
+  }
 
   std::cout << "device_info_path_imu: " << path << std::endl;
   cv::FileStorage imu_params_fs(path, cv::FileStorage::WRITE);
-  double l2imu_proj[4][4] = { {(double)config["rotation"][0], (double)config["rotation"][1], (double)config["rotation"][2], (double)config["translation"][0] / 1000.0},
-                              {(double)config["rotation"][3], (double)config["rotation"][4], (double)config["rotation"][5], (double)config["translation"][1] / 1000.0},
-                              {(double)config["rotation"][6], (double)config["rotation"][7], (double)config["rotation"][8], (double)config["translation"][2] / 1000.0},
+  double l2imu_proj[4][4] = { {(double)config["rotation"][0], (double)config["rotation"][1], (double)config["rotation"][2], (double)config["translation"][0] / fg},
+                              {(double)config["rotation"][3], (double)config["rotation"][4], (double)config["rotation"][5], (double)config["translation"][1] / fg},
+                              {(double)config["rotation"][6], (double)config["rotation"][7], (double)config["rotation"][8], (double)config["translation"][2] / fg},
                               {0., 0., 0., 1.} };
-  double l2r[4][4] = { {(double)config_r2l["rotation"][0], (double)config_r2l["rotation"][1], (double)config_r2l["rotation"][2], (double)config_r2l["translation"][0] / 1000.0},
-                       {(double)config_r2l["rotation"][3], (double)config_r2l["rotation"][4], (double)config_r2l["rotation"][5], (double)config_r2l["translation"][1] / 1000.0},
-                       {(double)config_r2l["rotation"][6], (double)config_r2l["rotation"][7], (double)config_r2l["rotation"][8], (double)config_r2l["translation"][2] / 1000.0},
+  double l2r[4][4] = { {(double)config_r2l["rotation"][0], (double)config_r2l["rotation"][1], (double)config_r2l["rotation"][2], (double)config_r2l["translation"][0] / fg},
+                       {(double)config_r2l["rotation"][3], (double)config_r2l["rotation"][4], (double)config_r2l["rotation"][5], (double)config_r2l["translation"][1] / fg},
+                       {(double)config_r2l["rotation"][6], (double)config_r2l["rotation"][7], (double)config_r2l["rotation"][8], (double)config_r2l["translation"][2] / fg},
                        {0., 0., 0., 1.} };
 
   cv::Mat body_T_cam0(4, 4, CV_64FC1, l2imu_proj);
@@ -254,10 +263,12 @@ bool MynteyeAdapter::readmynteyeConfig() {
     imu_intri = get_s_imu_intri_info();
     imu_extri = get_s_imu_extri_info();
     extri_l2r_string = get_s_extri_l2r();
+    tp = "s";
   } else if (imu_srv_ == "d") {
     imu_intri = get_d_imu_intri_info();
     imu_extri = get_d_imu_extri_info();
     extri_l2r_string = get_d_extri_l2r();
+    tp = "d";
   }
 
   if (imu_intri != "null" && imu_extri != "null") {

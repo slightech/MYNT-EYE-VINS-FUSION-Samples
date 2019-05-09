@@ -20,6 +20,7 @@ image_width: 752
 image_height: 480
 
 use_mynteye_adapter: 1
+mynteye_imu_srv: "s"
 
 # Extrinsic parameter between IMU and Camera.
 estimate_extrinsic: 1   # 0  Have an accurate extrinsic parameters. We will trust the following imu^R_cam, imu^T_cam, don't change it.
