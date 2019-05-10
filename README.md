@@ -131,6 +131,12 @@ device_params_right.yaml  (the right camera calib info)
 ```
 By the way,you can check the data if you get the unsatisfactory resault.
 
+If you want to use other config.yml in this project,please remind the params in config.yml behind.
+```
+use_mynteye_adapter: 1  (1：use mynteye calib adapter auto; 0/null: do not use mynteye calib adapter)
+mynteye_imu_srv: "d/s1/s2" (d: use d imu extri ros service; s1: use s1 imu extri ros service; s2: use s2 imu extri ros service; ""/null: do not use mynteye imu extri ros service)
+```
+
 
 # VINS-Fusion
 ## An optimization-based multi-sensor state estimator
