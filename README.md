@@ -2,9 +2,11 @@
 
 
 ## Prerequisites
-### 1. **Ubuntu** and **ROS**
+### 1. **Ubuntu** and **ROS** and **Hardware**
 Ubuntu 64-bit 16.04 or 18.04.
-ROS Kinetic or Melodic. [ROS Installation](http://wiki.ros.org/ROS/Installation)
+ROS Kinetic or Melodic. [ROS Installation](http://wiki.ros.org/ROS/Installation)   
+
+To complie with docker,we recommend that you should use more than 16G RAM, or ensure that the RAM and virtual memory space is greater than 16G.
 ### 2. **Install docker**
 ```
 sudo apt-get update
