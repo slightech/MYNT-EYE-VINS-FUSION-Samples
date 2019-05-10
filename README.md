@@ -114,8 +114,7 @@ cd path/to/this_repo/docker
 ```
 cd path/to/MYNT-EYE-S-SDK
 source wrappers/ros/devel/setup.bash
-roslaunch mynt_eye_ros_wrapper mynteye.launch
-roslaunch vins mynteye-s2100-stereo.launch
+roslaunch mynt_eye_ros_wrapper vins_fusion.launch
 ```
 Open another terminal
 ```
