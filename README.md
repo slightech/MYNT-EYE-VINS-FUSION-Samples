@@ -121,6 +121,16 @@ cd path/to/this_repo/docker
 ./run.sh mynteye-s2100/mynt_s2100_stereo_config.yaml
 ```
 
+## Tips
+When you execute the above steps correctly, you can find 3 files generated in the target config dir.
+   
+```
+device_imu_params.yaml  (the imu tf between left/right camera)
+device_params_left.yaml  (the left camera calib info)
+device_params_right.yaml  (the right camera calib info)
+```
+By the way,you can check the data if you get the unsatisfactory resault.
+
 
 # VINS-Fusion
 ## An optimization-based multi-sensor state estimator
