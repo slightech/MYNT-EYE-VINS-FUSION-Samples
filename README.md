@@ -28,6 +28,7 @@ Then add your account to `docker` group by `sudo usermod -aG docker $YOUR_USER_N
 
 ### 3. **Test docker**
 ```
+git clone https://github.com/slightech/MYNT-EYE-VINS-FUSION-Samples.git
 cd path/to/this_repo/docker
 make build
 ```
@@ -80,7 +81,7 @@ roslaunch mynteye_wrapper_d vins_fusion.launch  stream_mode:=1 # stereo camera w
 Open another terminal
 ```
 cd path/to/this_repo/docker
-./run.sh mynteye-d/mynt_mono_config.yaml.yaml
+./run.sh mynteye-d/mynt_mono_config.yaml
 ```
 #### Stereo fusion
 ```
