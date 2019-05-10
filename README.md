@@ -1,3 +1,108 @@
+# MYNT-EYE-VINS-FUSION
+
+
+## Prerequisites
+### 1. **Ubuntu** and **ROS**
+Ubuntu 64-bit 16.04 or 18.04.
+ROS Kinetic or Melodic. [ROS Installation](http://wiki.ros.org/ROS/Installation)
+### 2. **Install docker**
+To further facilitate the building process, we add docker in our code. Docker environment is like a sandbox, thus makes our code environment-independent. To run with docker, first make sure [ros](http://wiki.ros.org/ROS/Installation) and [docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/) are installed on your machine. Then add your account to `docker` group by `sudo usermod -aG docker $YOUR_USER_NAME`. **Relaunch the terminal or logout and re-login if you get `Permission denied` error**, type:
+```
+cd path/to/this_repo/docker
+make build
+```
+Note that the docker building process may take a while depends on your network and machine. After VINS-Fusion successfully built, you can run vins estimator with script `run.sh`.
+Script `run.sh` can take several flags and arguments. Flag `-k` means KITTI, `-l` represents loop fusion, and `-g` stands for global fusion. You can get the usage details by `./run.sh -h`. Here are some examples with this script:
+```
+# Euroc Monocualr camera + IMU
+./run.sh path/to/this_repo/config/euroc/euroc_mono_imu_config.yaml
+
+# Euroc Stereo cameras + IMU with loop fusion
+./run.sh -l path/to/this_repo/euroc/euroc_mono_imu_config.yaml
+
+# KITTI Odometry (Stereo)
+./run.sh -k path/to/this_repo/config/kitti_odom/kitti_config00-02.yaml YOUR_DATASET_FOLDER/sequences/00/
+
+# KITTI Odometry (Stereo) with loop fusion
+./run.sh -kl path/to/this_repo/config/kitti_odom/kitti_config00-02.yaml YOUR_DATASET_FOLDER/sequences/00/
+
+#  KITTI GPS Fusion (Stereo + GPS)
+./run.sh -kg path/to/this_repo/config/kitti_raw/kitti_10_03_config.yaml YOUR_DATASET_FOLDER/2011_10_03_drive_0027_sync/
+
+```
+In Euroc cases, you need open another terminal and play your bag file. If you need modify the code, simply re-run `./run.sh` with proper auguments after your changes.
+### 3. **Install MYNTEYE SDK**
+Skip this if already installed.
+[S-SDK Installation](https://mynt-eye-s-sdk.readthedocs.io/en/latest/src/sdk/source_install_ubuntu.html), [D-SDK Installation](https://mynt-eye-d-sdk.readthedocs.io/en/latest/installation/build_linux.html)
+
+## Run vins-fusion with <span id = "ssdkinstall">mynteye-s</span>
+
+#### Stereo fusion
+```
+cd path/to/MYNT-EYE-S-SDK
+source wrappers/ros/devel/setup.bash
+roslaunch mynt_eye_ros_wrapper vins_fusion.launch
+```
+Open another terminal
+```
+cd path/to/this_repo/docker
+./run.sh mynteye-s/mynt_s1_stereo_config.yaml
+```
+
+## Run vins-fusion with <span id = "dsdkinstall">mynteye-d</span>
+#### mono+imu fusion
+```
+cd path/to/MYNT-EYE-D-SDK
+source wrappers/ros/devel/setup.bash
+roslaunch mynteye_wrapper_d vins_fusion.launch  stream_mode:=1 # stereo camera with 640x480
+```
+Open another terminal
+```
+cd path/to/this_repo/docker
+./run.sh mynteye-d/mynt_mono_config.yaml.yaml
+```
+#### Stereo fusion
+```
+cd path/to/MYNT-EYE-D-SDK
+source wrappers/ros/devel/setup.bash
+roslaunch mynteye_wrapper_d vins_fusion.launch  stream_mode:=1 # stereo camera with 640x480
+
+```
+Open another terminal
+```
+cd path/to/this_repo/docker
+./run.sh mynteye-d/mynt_stereo_config.yaml
+```
+
+#### Stereo+imu fusion
+```
+cd path/to/MYNT-EYE-D-SDK
+source wrappers/ros/devel/setup.bash
+roslaunch mynteye_wrapper_d vins_fusion.launch  stream_mode:=1 # stereo camera with 640x480
+
+```
+Open another terminal
+```
+cd path/to/this_repo/docker
+./run.sh mynt_stereo_imu_config.yaml
+```
+
+## Run vins-fusion with <span id = "avartasdkinstall">mynteye-s2100</span>
+
+#### Stereo fusion
+```
+cd path/to/MYNT-EYE-S-SDK
+source wrappers/ros/devel/setup.bash
+roslaunch mynt_eye_ros_wrapper mynteye.launch
+roslaunch vins mynteye-s2100-stereo.launch
+```
+Open another terminal
+```
+cd path/to/this_repo/docker
+./run.sh mynteye-s2100/mynt_s2100_stereo_config.yaml
+```
+
+
 # VINS-Fusion
 ## An optimization-based multi-sensor state estimator
 
