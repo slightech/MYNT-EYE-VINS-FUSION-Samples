@@ -6,7 +6,25 @@
 Ubuntu 64-bit 16.04 or 18.04.
 ROS Kinetic or Melodic. [ROS Installation](http://wiki.ros.org/ROS/Installation)
 ### 2. **Install docker**
-To further facilitate the building process, we add docker in our code. Docker environment is like a sandbox, thus makes our code environment-independent. To run with docker, first make sure [ros](http://wiki.ros.org/ROS/Installation) and [docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/) are installed on your machine. Then add your account to `docker` group by `sudo usermod -aG docker $YOUR_USER_NAME`. **Relaunch the terminal or logout and re-login if you get `Permission denied` error**, type:
+```
+sudo apt-get update
+sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg-agent \
+    software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io    
+```
+Then add your account to `docker` group by `sudo usermod -aG docker $YOUR_USER_NAME`. **Relaunch the terminal or logout and re-login if you get `Permission denied` error**.
+
+### 3. **Test docker**
 ```
 cd path/to/this_repo/docker
 make build
@@ -31,7 +49,8 @@ Script `run.sh` can take several flags and arguments. Flag `-k` means KITTI, `-l
 
 ```
 In Euroc cases, you need open another terminal and play your bag file. If you need modify the code, simply re-run `./run.sh` with proper auguments after your changes.
-### 3. **Install MYNTEYE SDK**
+
+### 4. **Install MYNTEYE SDK**
 Skip this if already installed.
 [S-SDK Installation](https://mynt-eye-s-sdk.readthedocs.io/en/latest/src/sdk/source_install_ubuntu.html), [D-SDK Installation](https://mynt-eye-d-sdk.readthedocs.io/en/latest/installation/build_linux.html)
 
