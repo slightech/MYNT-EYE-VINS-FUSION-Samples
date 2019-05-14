@@ -106,7 +106,7 @@ roslaunch mynteye_wrapper_d vins_fusion.launch  stream_mode:=1 # stereo camera w
 Open another terminal
 ```
 cd path/to/this_repo/docker
-./run.sh mynt_stereo_imu_config.yaml
+./run.sh mynteye-d/mynt_stereo_imu_config.yaml
 ```
 
 ## Run vins-fusion with <span id = "avartasdkinstall">mynteye-s2100</span>
