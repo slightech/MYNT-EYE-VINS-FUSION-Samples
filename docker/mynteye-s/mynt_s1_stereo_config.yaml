@@ -10,17 +10,17 @@ image0_topic: "/mynteye/left/image_raw"
 image1_topic: "/mynteye/right/image_raw"
 output_path: "/home/zhangs/vins_fusion/"
 
-#cam0_calib: "left_pinhole.yaml"
-#cam1_calib: "right_pinhole.yaml"
+cam0_calib: "left_pinhole.yaml"
+cam1_calib: "right_pinhole.yaml"
 #cam0_calib: "left_equ.yaml"
 #cam1_calib: "right_equ.yaml"
-cam0_calib: "left_mei.yaml"
-cam1_calib: "right_mei.yaml"
+# cam0_calib: "left_mei.yaml"
+# cam1_calib: "right_mei.yaml"
 image_width: 752
 image_height: 480
 
 use_mynteye_adapter: 1
-mynteye_imu_srv: "s1"
+# mynteye_imu_srv: "s1" // not support s1
 
 # Extrinsic parameter between IMU and Camera.
 estimate_extrinsic: 1   # 0  Have an accurate extrinsic parameters. We will trust the following imu^R_cam, imu^T_cam, don't change it.

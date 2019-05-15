@@ -73,4 +73,4 @@ body_T_cam0: !!opencv-matrix
 
 #cam0_calib: "left_equ.yaml"
 #cam0_calib: "left_pinhole.yaml"
-cam0_calib: "left_mei.yaml"
+cam0_calib: "left_pinhole.yaml"
