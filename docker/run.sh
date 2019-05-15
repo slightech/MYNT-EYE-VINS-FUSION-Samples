@@ -80,9 +80,13 @@ fi
 LOOP_FUSION=0
 GLOBAL_FUSION=0
 KITTI=0
+SKIP_COMPLIE=0
 
-while getopts "hglk" opt; do
+while getopts "shglk" opt; do
     case "$opt" in
+        s)
+            SKIP_COMPLIE=1
+            ;;
         h)
             echoUsage
             exit 0
@@ -115,101 +119,112 @@ rviz -d ../config/vins_rviz_config.rviz &
 RVIZ_PID=$!
 
 VINS_FUSION_DIR=$(absPath "..")
-
-if [ $KITTI -eq 0 ]; then
-    if [ $LOOP_FUSION -eq 0 ]; then
-        docker run \
+if [ $SKIP_COMPLIE -eq 1 ]; then
+    docker run \
         -it \
         --rm \
         --net=host \
         -v ${VINS_FUSION_DIR}:/root/catkin_ws/src/VINS-Fusion/ \
         ros:vins-fusion \
         /bin/bash -c \
-        "cd /root/catkin_ws/; \
-        catkin config \
-                --env-cache \
-                --extend /opt/ros/$ROS_DISTRO \
-            --cmake-args \
-                -DCMAKE_BUILD_TYPE=Release; \
-            catkin build; \
-            source devel/setup.bash; \
-            rosrun vins vins_node ${CONFIG_IN_DOCKER}"
-    else
-        docker run \
-        -it \
-        --rm \
-        --net=host \
-        -v ${VINS_FUSION_DIR}:/root/catkin_ws/src/VINS-Fusion/ \
-        ros:vins-fusion \
-        /bin/bash -c \
-        "cd /root/catkin_ws/; \
-        catkin config \
-                --env-cache \
-                --extend /opt/ros/$ROS_DISTRO \
-            --cmake-args \
-                -DCMAKE_BUILD_TYPE=Release; \
-            catkin build; \
-            source devel/setup.bash; \
-            rosrun loop_fusion loop_fusion_node ${CONFIG_IN_DOCKER} & \
-            rosrun vins vins_node ${CONFIG_IN_DOCKER}"
-    fi
+        "source devel/setup.bash; \
+        rosrun vins vins_node ${CONFIG_IN_DOCKER}"
 else
-    if [ $LOOP_FUSION -eq 1 ]; then
-        docker run \
-        -it \
-        --rm \
-        --net=host \
-        -v ${VINS_FUSION_DIR}:/root/catkin_ws/src/VINS-Fusion/ \
-        -v ${KITTI_DATASET}:/root/kitti_dataset/ \
-        ros:vins-fusion \
-        /bin/bash -c \
-        "cd /root/catkin_ws/; \
-        catkin config \
-                --env-cache \
-                --extend /opt/ros/$ROS_DISTRO \
-            --cmake-args \
-                -DCMAKE_BUILD_TYPE=Release; \
-            catkin build; \
-            source devel/setup.bash; \
-            rosrun loop_fusion loop_fusion_node ${CONFIG_IN_DOCKER} & \
-            rosrun vins kitti_odom_test ${CONFIG_IN_DOCKER} /root/kitti_dataset/"
-    elif [ $GLOBAL_FUSION -eq 1 ]; then
-        docker run \
-        -it \
-        --rm \
-        --net=host \
-        -v ${VINS_FUSION_DIR}:/root/catkin_ws/src/VINS-Fusion/ \
-        -v ${KITTI_DATASET}:/root/kitti_dataset/ \
-        ros:vins-fusion \
-        /bin/bash -c \
-        "cd /root/catkin_ws/; \
-        catkin config \
-                --env-cache \
-                --extend /opt/ros/$ROS_DISTRO \
-            --cmake-args \
-                -DCMAKE_BUILD_TYPE=Release; \
-            catkin build; \
-            source devel/setup.bash; \
-            rosrun global_fusion global_fusion_node & \
-            rosrun vins kitti_gps_test ${CONFIG_IN_DOCKER} /root/kitti_dataset/"
+    if [ $KITTI -eq 0 ]; then
+        if [ $LOOP_FUSION -eq 0 ]; then
+            docker run \
+            -it \
+            --rm \
+            --net=host \
+            -v ${VINS_FUSION_DIR}:/root/catkin_ws/src/VINS-Fusion/ \
+            ros:vins-fusion \
+            /bin/bash -c \
+            "cd /root/catkin_ws/; \
+            catkin config \
+                    --env-cache \
+                    --extend /opt/ros/$ROS_DISTRO \
+                --cmake-args \
+                    -DCMAKE_BUILD_TYPE=Release; \
+                catkin build; \
+                source devel/setup.bash; \
+                rosrun vins vins_node ${CONFIG_IN_DOCKER}"
+        else
+            docker run \
+            -it \
+            --rm \
+            --net=host \
+            -v ${VINS_FUSION_DIR}:/root/catkin_ws/src/VINS-Fusion/ \
+            ros:vins-fusion \
+            /bin/bash -c \
+            "cd /root/catkin_ws/; \
+            catkin config \
+                    --env-cache \
+                    --extend /opt/ros/$ROS_DISTRO \
+                --cmake-args \
+                    -DCMAKE_BUILD_TYPE=Release; \
+                catkin build; \
+                source devel/setup.bash; \
+                rosrun loop_fusion loop_fusion_node ${CONFIG_IN_DOCKER} & \
+                rosrun vins vins_node ${CONFIG_IN_DOCKER}"
+        fi
     else
-        docker run \
-        -it \
-        --rm \
-        --net=host \
-        -v ${VINS_FUSION_DIR}:/root/catkin_ws/src/VINS-Fusion/ \
-        -v ${KITTI_DATASET}:/root/kitti_dataset/ \
-        ros:vins-fusion \
-        /bin/bash -c \
-        "cd /root/catkin_ws/; \
-        catkin config \
-                --env-cache \
-                --extend /opt/ros/$ROS_DISTRO \
-            --cmake-args \
-                -DCMAKE_BUILD_TYPE=Release; \
-            catkin build; \
-            source devel/setup.bash; \
-            rosrun vins kitti_odom_test ${CONFIG_IN_DOCKER} /root/kitti_dataset/"
+        if [ $LOOP_FUSION -eq 1 ]; then
+            docker run \
+            -it \
+            --rm \
+            --net=host \
+            -v ${VINS_FUSION_DIR}:/root/catkin_ws/src/VINS-Fusion/ \
+            -v ${KITTI_DATASET}:/root/kitti_dataset/ \
+            ros:vins-fusion \
+            /bin/bash -c \
+            "cd /root/catkin_ws/; \
+            catkin config \
+                    --env-cache \
+                    --extend /opt/ros/$ROS_DISTRO \
+                --cmake-args \
+                    -DCMAKE_BUILD_TYPE=Release; \
+                catkin build; \
+                source devel/setup.bash; \
+                rosrun loop_fusion loop_fusion_node ${CONFIG_IN_DOCKER} & \
+                rosrun vins kitti_odom_test ${CONFIG_IN_DOCKER} /root/kitti_dataset/"
+        elif [ $GLOBAL_FUSION -eq 1 ]; then
+            docker run \
+            -it \
+            --rm \
+            --net=host \
+            -v ${VINS_FUSION_DIR}:/root/catkin_ws/src/VINS-Fusion/ \
+            -v ${KITTI_DATASET}:/root/kitti_dataset/ \
+            ros:vins-fusion \
+            /bin/bash -c \
+            "cd /root/catkin_ws/; \
+            catkin config \
+                    --env-cache \
+                    --extend /opt/ros/$ROS_DISTRO \
+                --cmake-args \
+                    -DCMAKE_BUILD_TYPE=Release; \
+                catkin build; \
+                source devel/setup.bash; \
+                rosrun global_fusion global_fusion_node & \
+                rosrun vins kitti_gps_test ${CONFIG_IN_DOCKER} /root/kitti_dataset/"
+        else
+            docker run \
+            -it \
+            --rm \
+            --net=host \
+            -v ${VINS_FUSION_DIR}:/root/catkin_ws/src/VINS-Fusion/ \
+            -v ${KITTI_DATASET}:/root/kitti_dataset/ \
+            ros:vins-fusion \
+            /bin/bash -c \
+            "cd /root/catkin_ws/; \
+            catkin config \
+                    --env-cache \
+                    --extend /opt/ros/$ROS_DISTRO \
+                --cmake-args \
+                    -DCMAKE_BUILD_TYPE=Release; \
+                catkin build; \
+                source devel/setup.bash; \
+                rosrun vins kitti_odom_test ${CONFIG_IN_DOCKER} /root/kitti_dataset/"
+        fi
     fi
 fi
 

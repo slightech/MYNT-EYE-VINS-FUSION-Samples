@@ -309,7 +309,7 @@ bool MynteyeAdapter::readmynteyeConfig() {
       imu_res = true;
     }
   } else {
-    if (imu_srv_ == "s" || imu_srv_ == "d") {
+    if (imu_srv_ == "s1" || imu_srv_ == "s2" || imu_srv_ == "d") {
       ROS_WARN("check the list below:");
       ROS_WARN("1. the mynteye device ROS nodelet not been launched");
       ROS_WARN("2. the mynteye device SDK version may be too old");
