@@ -143,6 +143,9 @@ device_imu_params.yaml  (the imu tf between left/right camera)
 device_params_left.yaml  (the left camera calib info)
 device_params_right.yaml  (the right camera calib info)
 ```
+the device_imu_params.yaml not supported when use s1 device, so we provide a default well worked matrix.   
+If you wan't to calib the imu TF by yourself, you should be careful.
+
 By the way,you can check the data if you get the unsatisfactory result.
 
 If you want to use other config.yml in this project,please remind the params in config.yml behind.
