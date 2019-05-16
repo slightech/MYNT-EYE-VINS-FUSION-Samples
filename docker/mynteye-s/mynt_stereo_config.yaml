@@ -2,7 +2,7 @@
 
 #common parameters
 #support: 1 imu 1 cam; 1 imu 2 cam: 2 cam; 
-imu: 0         
+imu: 1         
 num_of_cam: 2  
 
 imu_topic: "/mynteye/imu/data_raw"
@@ -59,38 +59,22 @@ estimate_extrinsic: 0   # 0  Have an accurate extrinsic parameters. We will trus
 #  [ 0.          0.          0.          1.        ]]
 
 body_T_cam0: !!opencv-matrix
-   rows: 4
-   cols: 4
-   dt: d
-   data: [ -0.00703616,  0.99994059, -0.00832506,  0.04450444,
-           -0.99995328, -0.00709095, -0.00656994,  0.00334532,
-           -0.00662858,  0.00827845,  0.99994376, -0.02085464,
-            0., 0., 0., 1. ]
+  rows: 4
+  cols: 4
+  dt: d
+  data: [-0.00703616, -0.99995328, -0.00662858, 0.00352007,
+         0.99994059, -0.00709095, 0.00827845, -0.04430543, 
+         -0.00832506, -0.00656994, 0.99994376, 0.02124595,
+          0, 0, 0, 1]
+
 body_T_cam1: !!opencv-matrix
-   rows: 4
-   cols: 4
-   dt: d
-   data: [ -0.00061628,  0.99991377, -0.01311776, -0.07519094,
-            -0.99995139, -0.00074529, -0.00983202,  0.00337341,
-            -0.00984095,  0.01311106,  0.99986562, -0.02100022,
-            0., 0., 0., 1. ]
-#body_T_cam0: !!opencv-matrix
-#   rows: 4
-#   cols: 4
-#   dt: d
-#   data: [-0.00703616, -0.99995328, -0.00662858, 0.00352007,
-#          0.99994059, -0.00709095, 0.00827845, -0.04430543, 
-#          -0.00832506, -0.00656994, 0.99994376, 0.02124595,
-#           0, 0, 0, 1]
-#
-#body_T_cam1: !!opencv-matrix
-#   rows: 4
-#   cols: 4
-#   dt: d
-#   data: [-0.00061628, -0.99995139, -0.00984095, 0.00312025,
-#          0.99991377, -0.00074529, 0.01311106, 0.07546231,
-#          -0.01311776, -0.00983202, 0.99986562, 0.02004423,
-#          0, 0, 0, 1]
+  rows: 4
+  cols: 4
+  dt: d
+  data: [-0.00061628, -0.99995139, -0.00984095, 0.00312025,
+         0.99991377, -0.00074529, 0.01311106, 0.07546231,
+         -0.01311776, -0.00983202, 0.99986562, 0.02004423,
+         0, 0, 0, 1]
 
 #Multiple thread support
 multiple_thread: 1
@@ -107,3 +91,32 @@ flow_back: 1            # perform forward and backward optical flow to improve f
 max_solver_time: 0.04  # max solver itration time (ms), to guarantee real time
 max_num_iterations: 8   # max solver itrations, to guarantee real time
 keyframe_parallax: 10.0 # keyframe selection threshold (pixel)
+
+#imu parameters       The more accurate parameters you provide, the better performance
+#acc_n: 0.1          # accelerometer measurement noise standard deviation. 
+#gyr_n: 0.01         # gyroscope measurement noise standard deviation.     
+#acc_w: 0.001        # accelerometer bias random work noise standard deviation.  
+#gyr_w: 0.0001       # gyroscope bias random work noise standard deviation.     
+#g_norm: 9.81007     # gravity magnitude
+
+#acc_n: 0.0268014618074         # accelerometer measurement noise standard deviation. #0.599298904976
+#gyr_n: 0.00888232829671        # gyroscope measurement noise standard deviation.     #0.198614898699
+#acc_w: 0.00262960861593         # accelerometer bias random work noise standard deviation.  #0.02
+#gyr_w: 0.000379565782927       # gyroscope bias random work noise standard deviation.     #4.0e-5
+#g_norm: 9.81007     # gravity magnitude
+
+acc_n: 2.1657228523252730e-02          # accelerometer measurement noise standard deviation. #0.599298904976
+gyr_n: 2.1923690143745844e-03        # gyroscope measurement noise standard deviation.     #0.198614898699
+acc_w: 3.8153871149178200e-04         # accelerometer bias random work noise standard deviation.  #0.02
+gyr_w: 1.4221215955051228e-05       # gyroscope bias random work noise standard deviation.     #4.0e-5
+g_norm: 9.81007     # gravity magnitude
+
+#unsynchronization parameters
+estimate_td: 1                      # online estimate time offset between camera and imu
+td: 0.0                             # initial value of time offset. unit: s. readed image clock + td = real image clock (IMU clock)
+
+#loop closure parameters
+load_previous_pose_graph: 0        # load and reuse previous pose graph; load from 'pose_graph_save_path'
+pose_graph_save_path: "/home/tiny/vins_fusion/pose_graph/" # save and load path
+save_image: 1                   # save image in pose graph for visualization prupose; you can close this function by setting 0
+

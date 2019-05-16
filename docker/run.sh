@@ -127,7 +127,8 @@ if [ $SKIP_COMPLIE -eq 1 ]; then
         -v ${VINS_FUSION_DIR}:/root/catkin_ws/src/VINS-Fusion/ \
         ros:vins-fusion \
         /bin/bash -c \
-        "source devel/setup.bash; \
+        "cd /root/catkin_ws/; \
+        source devel/setup.bash; \
         rosrun vins vins_node ${CONFIG_IN_DOCKER}"
 else
     if [ $KITTI -eq 0 ]; then
