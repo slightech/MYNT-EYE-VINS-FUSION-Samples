@@ -59,7 +59,7 @@ Skip this if already installed.
 
 ## Run vins-fusion with <span id = "ssdkinstall">mynteye-s</span>
 
-#### Stereo fusion
+#### Stereo+imu fusion
 ```
 cd path/to/MYNT-EYE-S-SDK
 source wrappers/ros/devel/setup.bash
@@ -68,7 +68,7 @@ roslaunch mynt_eye_ros_wrapper vins_fusion.launch
 Open another terminal
 ```
 cd path/to/this_repo/docker
-./run.sh mynteye-s/mynt_stereo_config.yaml
+./run.sh mynteye-s/mynt_stereo_imu_config.yaml
 ```
 
 ## Run vins-fusion with <span id = "dsdkinstall">mynteye-d</span>
