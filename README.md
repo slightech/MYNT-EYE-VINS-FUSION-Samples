@@ -113,7 +113,7 @@ cd path/to/this_repo/docker
 ```
 ./run.sh -l mynteye-s/mynt_stereo_imu_config.yaml
 ```
-![image](https://github.com/slightech/MYNT-EYE-VINS-FUSION-Samples/tree/docker_feat/support_files/image/mynteye_s1_loop.png)
+![image](https://github.com/slightech/MYNT-EYE-VINS-FUSION-Samples/blob/docker_feat/support_files/image/mynteye_s1_loop.png)
 
 
 #### 2.When you execute the above steps correctly, you can find 3 files generated in the target config dir.
