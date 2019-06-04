@@ -123,6 +123,8 @@ device_imu_params.yaml  (the imu tf between left/right camera)
 device_params_left.yaml  (the left camera calib info)
 device_params_right.yaml  (the right camera calib info)
 ```
+![image](https://github.com/slightech/MYNT-EYE-VINS-FUSION-Samples/blob/docker_feat/support_files/image/device_files.png)
+
 the device_imu_params.yaml not supported when use s1 device, so we provide a default well worked matrix.   
 If you wan't to calib the imu TF by yourself, you should be careful.
 
