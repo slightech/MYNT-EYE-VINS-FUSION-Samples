@@ -26,34 +26,7 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io
 ```
 Then add your account to `docker` group by `sudo usermod -aG docker $YOUR_USER_NAME`. **Relaunch the terminal or logout and re-login if you get `Permission denied` error**.
 
-### 3. **Test docker**
-```
-git clone https://github.com/slightech/MYNT-EYE-VINS-FUSION-Samples.git
-cd path/to/this_repo/docker
-make build
-```
-Note that the docker building process may take a while depends on your network and machine. After VINS-Fusion successfully built, you can run vins estimator with script `run.sh`.
-Script `run.sh` can take several flags and arguments. Flag `-k` means KITTI, `-l` represents loop fusion, and `-g` stands for global fusion. You can get the usage details by `./run.sh -h`. Here are some examples with this script:
-```
-# Euroc Monocualr camera + IMU
-./run.sh path/to/this_repo/config/euroc/euroc_mono_imu_config.yaml
-
-# Euroc Stereo cameras + IMU with loop fusion
-./run.sh -l path/to/this_repo/euroc/euroc_mono_imu_config.yaml
-
-# KITTI Odometry (Stereo)
-./run.sh -k path/to/this_repo/config/kitti_odom/kitti_config00-02.yaml YOUR_DATASET_FOLDER/sequences/00/
-
-# KITTI Odometry (Stereo) with loop fusion
-./run.sh -kl path/to/this_repo/config/kitti_odom/kitti_config00-02.yaml YOUR_DATASET_FOLDER/sequences/00/
-
-#  KITTI GPS Fusion (Stereo + GPS)
-./run.sh -kg path/to/this_repo/config/kitti_raw/kitti_10_03_config.yaml YOUR_DATASET_FOLDER/2011_10_03_drive_0027_sync/
-
-```
-In Euroc cases, you need open another terminal and play your bag file. If you need modify the code, simply re-run `./run.sh` with proper auguments after your changes.
-
-### 4. **Install MYNTEYE SDK**
+### 3. **Install MYNTEYE SDK**
 Skip this if already installed.
 [S-SDK Installation](https://mynt-eye-s-sdk.readthedocs.io/en/latest/src/sdk/source_install_ubuntu.html), [D-SDK Installation](https://mynt-eye-d-sdk.readthedocs.io/en/latest/installation/build_linux.html)
 
@@ -136,7 +109,14 @@ cd path/to/this_repo/docker
 ```
 
 ## Tips
-When you execute the above steps correctly, you can find 3 files generated in the target config dir.
+#### 1.If you want to use our slam device case with loop fusion. you should run the run.sh like this:
+```
+./run.sh -l mynteye-s/mynt_stereo_imu_config.yaml
+```
+<img src="https://github.com/slightech/MYNT-EYE-VINS-FUSION-Samples/tree/docker_feat/support_files/image/mynteye_s1_loop.png" width = 55% height = 55% div align=left />
+   
+
+#### 2.When you execute the above steps correctly, you can find 3 files generated in the target config dir.
    
 ```
 device_imu_params.yaml  (the imu tf between left/right camera)
@@ -148,7 +128,7 @@ If you wan't to calib the imu TF by yourself, you should be careful.
 
 By the way,you can check the data if you get the unsatisfactory result.
 
-If you want to use other config.yml in this project,please remind the params in config.yml behind.
+#### 3.If you want to use other config.yml in this project,please remind the params in config.yml behind.
 ```
 use_mynteye_adapter: 1  (1：use mynteye calib adapter auto; 0/null: do not use mynteye calib adapter)
 mynteye_imu_srv: "d/s1/s2" (d: use d imu extri ros service; s1: use s1 imu extri ros service; s2: use s2 imu extri ros service; ""/null: do not use mynteye imu extri ros service)
