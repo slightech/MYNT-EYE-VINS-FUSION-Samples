@@ -2,7 +2,7 @@
 <launch>
     <arg name="config_file" default="$(find vins)/../config/mynteye-s/mynt_mono_config.yaml" />
 
-    <node name="vins_estimator_s" pkg="vins" type="vins_s_node" output="screen" >
+    <node name="vins_estimator" pkg="vins" type="vins_s_node" output="screen" >
       <param name="config_file" value="$(arg config_file)" />
     </node>
 
