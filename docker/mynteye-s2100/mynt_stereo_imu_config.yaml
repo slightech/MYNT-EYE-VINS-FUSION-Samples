@@ -63,7 +63,7 @@ estimate_extrinsic: 0   # 0  Have an accurate extrinsic parameters. We will trus
                         # 1  Have an initial guess about extrinsic parameters. We will optimize around your initial guess.
 
 use_mynteye_adapter: 1
-mynteye_imu_srv: "s2"
+# mynteye_imu_srv: "s2"
 
 # ==================================================================
 # Following contents will be auto adapter when you use mynteye sdk.
@@ -82,19 +82,16 @@ body_T_cam0: !!opencv-matrix
    rows: 4
    cols: 4
    dt: d
-   data: [-0.99984969, 0.01583498, -0.0070602, 0.04182462,
-          -0.01586578, -0.99986476, 0.00432818, -0.00187427,
-          -0.00699071, 0.00443954, 0.99996571, 0.00463773,
-          0., 0., 0., 1. ]
-
+   data: [ -1., 0., 0., 4.1309999999999999e-02, 0., -1., 0.,
+       -2.8500000000000001e-03, 0., 0., 1., -1.0000000000000000e-02, 0.,
+       0., 0., 1. ]
 body_T_cam1: !!opencv-matrix
    rows: 4
    cols: 4
    dt: d
-   data: [-0.99985705,  0.0163996 , -0.00411503, -0.0381497,
-          -0.01639405, -0.99986466, -0.00137949, -0.00328505,
-          -0.0041371 , -0.00131183,  0.99999058,  0.00456543,
-          0., 0., 0., 1. ]
+   data: [ -1., 0., 0., -3.8690000000000002e-02, 0., -1., 0.,
+       -2.8500000000000001e-03, 0., 0., 1., -1.0000000000000000e-02, 0.,
+       0., 0., 1. ]
 
 #body_T_cam0: !!opencv-matrix
 #   rows: 4
