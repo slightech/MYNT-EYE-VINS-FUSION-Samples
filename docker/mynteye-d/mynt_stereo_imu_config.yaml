@@ -11,7 +11,7 @@ image1_topic: "/mynteye/right/image_color"
 output_path: "/your/local/path/"
 
 use_mynteye_adapter: 1
-mynteye_imu_srv: "d"
+# mynteye_imu_srv: "d"
 
 image_width: 640
 image_height: 480
