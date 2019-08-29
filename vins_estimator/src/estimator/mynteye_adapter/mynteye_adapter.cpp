@@ -88,13 +88,10 @@ bool ConversionIMUFromDeviceVINSFUSION(
   double l_r_s[3] = {1.0, 1.0, 1.0};
   double mut_t_s[3] = {1.0, 1.0, 1.0};
   if (tp == "d") {
+    // fix bug r-l img params
+    l_r_s[0] = -1;
     fg = 1000.0;
   } else if (tp == "s2") {
-    mut_r_s[0][0] = -1.0;
-    mut_r_s[2][2] = -1.0;
-    mut_t_s[0] = -1.0;
-    mut_t_s[1] = -1.0;
-    // mut_t_s[0] = -1.0;
     fg = 1000.0;
   } else if (tp == "s1") {
     // fg = 10.0;
@@ -105,7 +102,7 @@ bool ConversionIMUFromDeviceVINSFUSION(
 
   std::cout << "device_info_path_imu: " << path << std::endl;
   cv::FileStorage imu_params_fs(path, cv::FileStorage::WRITE);
-  double l2imu_proj[4][4] = { {(double)config["rotation"][0] * mut_r_s[0][0], (double)config["rotation"][1] * mut_r_s[0][1], (double)config["rotation"][2] * mut_r_s[0][2], (double)config["translation"][0] / fg * mut_t_s[0]},
+  double l2imu[4][4] = { {(double)config["rotation"][0] * mut_r_s[0][0], (double)config["rotation"][1] * mut_r_s[0][1], (double)config["rotation"][2] * mut_r_s[0][2], (double)config["translation"][0] / fg * mut_t_s[0]},
                               {(double)config["rotation"][3] * mut_r_s[1][0], (double)config["rotation"][4] * mut_r_s[1][1], (double)config["rotation"][5] * mut_r_s[1][2], (double)config["translation"][1] / fg * mut_t_s[0]},
                               {(double)config["rotation"][6] * mut_r_s[2][0], (double)config["rotation"][7] * mut_r_s[2][1], (double)config["rotation"][8] * mut_r_s[2][2], (double)config["translation"][2] / fg * mut_t_s[0]},
                               {0., 0., 0., 1.} };
@@ -114,13 +111,13 @@ bool ConversionIMUFromDeviceVINSFUSION(
                        {(double)config_r2l["rotation"][6], (double)config_r2l["rotation"][7], (double)config_r2l["rotation"][8], (double)config_r2l["translation"][2] / fg * l_r_s[2]},
                        {0., 0., 0., 1.} };
 
-  cv::Mat body_T_cam0(4, 4, CV_64FC1, l2imu_proj);
+  cv::Mat l2imu_pr(4, 4, CV_64FC1, l2imu);
+  cv::Mat imu2l_pr(4, 4, CV_64FC1);
+  cv::invert(l2imu_pr, imu2l_pr);
   cv::Mat l2r_pr(4, 4, CV_64FC1, l2r);
-  cv::Mat l2r_pr_n(4, 4, CV_64FC1);
-  cv::invert(l2r_pr, l2r_pr_n);
 
-  imu_params_fs << "body_T_cam0" << body_T_cam0;
-  imu_params_fs << "body_T_cam1" << body_T_cam0 * l2r_pr_n;
+  imu_params_fs << "body_T_cam0" << imu2l_pr;
+  imu_params_fs << "body_T_cam1" << l2r_pr * imu2l_pr;
 
   imu_params_fs.release();
   return true;

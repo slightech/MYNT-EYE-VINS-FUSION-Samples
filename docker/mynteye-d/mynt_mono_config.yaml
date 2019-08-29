@@ -13,7 +13,7 @@ image_width: 640
 image_height: 480
 
 use_mynteye_adapter: 1
-mynteye_imu_srv: "d"
+# mynteye_imu_srv: "d"
 
 #Multiple thread support
 multiple_thread: 1
@@ -66,10 +66,9 @@ body_T_cam0: !!opencv-matrix
    rows: 4
    cols: 4
    dt: d
-   data: [-0.0064662, -0.99994994, -0.00763565, 0.00533646,
-           0.99997909, -0.00646566, -0.00009558, -0.04302922,
-           0.0000462, -0.00763611, 0.99997084, 0.02303124,
-           0, 0, 0, 1]
+   data: [ 1., 0., 0., 4.1300000000000003e-02, 0., -1., 0.,
+       1.8500000000000001e-03, 0., 0., -1., -2.0000000000000000e-02, 0.,
+       0., 0., 1. ]
 
 #cam0_calib: "left_equ.yaml"
 #cam0_calib: "left_pinhole.yaml"
