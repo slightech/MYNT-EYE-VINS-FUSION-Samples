@@ -108,6 +108,32 @@ cd path/to/this_repo/docker
 ./run.sh mynteye-s2100/mynt_stereo_imu_config.yaml
 ```
 
+## Run vins-fusion with <span id = "avartasdkinstall">mynteye-s2110</span>
+
+#### Stereo fusion
+```
+cd path/to/MYNT-EYE-S-SDK
+source wrappers/ros/devel/setup.bash
+roslaunch mynt_eye_ros_wrapper vins_fusion.launch
+```
+Open another terminal
+```
+cd path/to/this_repo/docker
+./run.sh mynteye-s2110/mynt_stereo_config.yaml
+```
+
+#### Stereo+imu fusion
+```
+cd path/to/MYNT-EYE-S-SDK
+source wrappers/ros/devel/setup.bash
+roslaunch mynt_eye_ros_wrapper vins_fusion.launch
+```
+Open another terminal
+```
+cd path/to/this_repo/docker
+./run.sh mynteye-s2110/mynt_stereo_imu_config.yaml
+```
+
 ## Tips
 #### 1.If you want to use our slam device case with loop fusion. you should run the run.sh like this:
 ```
