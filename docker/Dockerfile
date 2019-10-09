@@ -6,6 +6,7 @@ ENV CATKIN_WS=/root/catkin_ws
       # set up thread number for building
 RUN   if [ "x$(nproc)" = "x1" ] ; then export USE_PROC=1 ; \
       else export USE_PROC=$(($(nproc)/2)) ; fi && \
+      apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654 \
       apt-get update && apt-get install -y \
       cmake \
       libatlas-base-dev \
