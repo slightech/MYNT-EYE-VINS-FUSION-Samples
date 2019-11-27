@@ -31,7 +31,8 @@ Skip this if already installed.
 [S-SDK Installation](https://mynt-eye-s-sdk.readthedocs.io/en/latest/src/sdk/source_install_ubuntu.html), [D-SDK Installation](https://mynt-eye-d-sdk.readthedocs.io/en/latest/installation/build_linux.html)
 
 ### 4. **Build docker image**
-cd path/to/this_repo/docker
+cd path/to/this_repo/docker  
+
 make build
 
 ## Run vins-fusion with <span id = "ssdkinstall">mynteye-s</span>
